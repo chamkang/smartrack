@@ -1,9 +1,10 @@
 <?php  
 
 $dataTranslations = {
+  
     en: {
   
-        n1: "Home",
+        "n1": "Home",
         "n2": "About",
         "n3": "Devices",
         "n4": "Career",
@@ -116,7 +117,7 @@ $dataTranslations = {
   
 "fr": {
   
-        n1: "Accueil",
+        "n1": "Accueil",
         "n2": "À propos",
         "n3": "Appareils",
         "n4": "Carrière",
