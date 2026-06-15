@@ -17,6 +17,6 @@ if ($name === '' || $email === '' || $message === '') {
     redirect(site_url('contact.php?error=missing_fields'));
 }
 
-$stmt = db()->prepare('INSERT INTO contact_messages (name, email, subject, message, created_at) VALUES (:name, :email, :subject, :message, NOW())');
+$stmt = db()->prepare('INSERT INTO contact_messages (name, email, subject, message, created_at) VALUES (:name, :email, :subject, :message, CURRENT_TIMESTAMP)');
 $stmt->execute([':name' => $name, ':email' => $email, ':subject' => $subject, ':message' => $message]);
 redirect(site_url('contact.php?success=message'));

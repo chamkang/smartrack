@@ -17,6 +17,6 @@ if ($name === '' || $email === '' || $phone === '' || $message === '') {
     redirect(site_url('contact.php?error=missing_fields'));
 }
 
-$stmt = db()->prepare('INSERT INTO quote_requests (name, email, phone, message, created_at) VALUES (:name, :email, :phone, :message, NOW())');
+$stmt = db()->prepare('INSERT INTO quote_requests (name, email, phone, message, created_at) VALUES (:name, :email, :phone, :message, CURRENT_TIMESTAMP)');
 $stmt->execute([':name' => $name, ':email' => $email, ':phone' => $phone, ':message' => $message]);
 redirect(site_url('contact.php?success=quote'));

@@ -1,84 +1,123 @@
 <?php
 require_once __DIR__ . '/../includes/functions.php';
 require_admin();
-$pageTitle = 'Manage Gallery';
+$pageTitle = 'Gallery';
 $error = '';
-$action = $_POST['action'] ?? '';
+$saved = false;
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf($_POST['csrf_token'] ?? '')) {
-        $error = 'Invalid CSRF token.';
-    } elseif ($action === 'delete' && !empty($_POST['gallery_id'])) {
-        $stmt = db()->prepare('DELETE FROM gallery WHERE id = :id');
-        $stmt->execute([':id' => (int) $_POST['gallery_id']]);
+        $error = 'Invalid security token.';
+    } elseif ($_POST['action'] === 'delete' && !empty($_POST['gallery_id'])) {
+        db()->prepare('DELETE FROM gallery WHERE id = ?')->execute([(int)$_POST['gallery_id']]);
         redirect('gallery.php');
-    } elseif ($action === 'save') {
-        $descriptionEn = trim($_POST['description_en'] ?? '');
-        $descriptionFr = trim($_POST['description_fr'] ?? '');
-        $imagePath = null;
-
+    } elseif ($_POST['action'] === 'save') {
+        $descEn = trim($_POST['description_en'] ?? '');
+        $descFr = trim($_POST['description_fr'] ?? '');
         try {
             $imagePath = upload_image('image', 'gallery');
-        } catch (RuntimeException $uploadError) {
-            $error = $uploadError->getMessage();
+        } catch (RuntimeException $e) {
+            $error = $e->getMessage();
         }
-
         if (!$error && $imagePath) {
-            $stmt = db()->prepare('INSERT INTO gallery (image_path, description_en, description_fr, created_at) VALUES (:image_path, :description_en, :description_fr, NOW())');
-            $stmt->execute([':image_path' => $imagePath, ':description_en' => $descriptionEn, ':description_fr' => $descriptionFr]);
-            redirect('gallery.php');
+            db()->prepare('INSERT INTO gallery (image_path,description_en,description_fr,created_at) VALUES (?,?,?,CURRENT_TIMESTAMP)')
+               ->execute([$imagePath, $descEn, $descFr]);
+            redirect('gallery.php?saved=1');
+        } elseif (!$error) {
+            $error = 'Please choose an image file to upload.';
         }
     }
 }
-$galleryItems = db()->query('SELECT * FROM gallery ORDER BY created_at DESC')->fetchAll();
+
+$saved = isset($_GET['saved']);
+$items = db()->query('SELECT * FROM gallery ORDER BY sort_order ASC, created_at DESC')->fetchAll();
+
 define('APP_INIT_ADMIN', true);
 include __DIR__ . '/_header.php';
 ?>
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1>Gallery</h1>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Gallery</h1>
+    <p class="page-subtitle"><?php echo count($items); ?> image<?php echo count($items) !== 1 ? 's' : ''; ?> in the gallery.</p>
+  </div>
 </div>
+
 <?php if ($error): ?>
-  <div class="alert alert-danger"><?php echo escape($error); ?></div>
+  <div class="admin-alert danger"><i class="bi bi-exclamation-triangle-fill admin-alert-icon"></i><?php echo escape($error); ?></div>
 <?php endif; ?>
-<div class="row gy-4">
-  <div class="col-lg-6">
-    <div class="card p-4">
-      <h5>Upload Image</h5>
-      <form method="post" enctype="multipart/form-data">
-        <input type="hidden" name="csrf_token" value="<?php echo escape(csrf_token()); ?>">
-        <input type="hidden" name="action" value="save">
-        <div class="mb-3"><label class="form-label">Image</label><input class="form-control" type="file" name="image" accept="image/jpeg,image/png,image/webp" required></div>
-        <div class="mb-3"><label class="form-label">Description (EN)</label><textarea class="form-control" name="description_en" rows="2"></textarea></div>
-        <div class="mb-3"><label class="form-label">Description (FR)</label><textarea class="form-control" name="description_fr" rows="2"></textarea></div>
-        <button class="btn btn-primary w-100" type="submit">Upload</button>
-      </form>
-    </div>
+<?php if ($saved): ?>
+  <div class="admin-alert success"><i class="bi bi-check-circle-fill admin-alert-icon"></i>Image uploaded successfully.</div>
+<?php endif; ?>
+
+<!-- Upload form -->
+<div class="admin-card" style="margin-bottom:28px;">
+  <div class="admin-card-header">
+    <div class="admin-card-title"><i class="bi bi-cloud-upload-fill"></i> Upload New Image</div>
   </div>
-  <div class="col-lg-6">
-    <div class="card p-4">
-      <h5>Gallery Items</h5>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead><tr><th>ID</th><th>Image</th><th>Description EN</th><th>Actions</th></tr></thead>
-          <tbody>
-          <?php foreach ($galleryItems as $item): ?>
-            <tr>
-              <td><?php echo escape($item['id']); ?></td>
-              <td><img src="<?php echo escape($item['image_path']); ?>" width="120" alt="Gallery"></td>
-              <td><?php echo escape($item['description_en']); ?></td>
-              <td>
-                <form method="post" class="d-inline" onsubmit="return confirm('Delete this gallery item?');">
-                  <input type="hidden" name="csrf_token" value="<?php echo escape(csrf_token()); ?>">
-                  <input type="hidden" name="action" value="delete">
-                  <input type="hidden" name="gallery_id" value="<?php echo escape($item['id']); ?>">
-                  <button class="btn btn-sm btn-danger" type="submit">Delete</button>
-                </form>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-          </tbody>
-        </table>
+  <div class="admin-card-body">
+    <form method="post" enctype="multipart/form-data">
+      <input type="hidden" name="csrf_token" value="<?php echo escape(csrf_token()); ?>">
+      <input type="hidden" name="action" value="save">
+      <div style="display:grid;grid-template-columns:1fr 1fr 280px;gap:16px;align-items:end;">
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Image <span class="required">*</span></label>
+          <input class="form-control" type="file" name="image" accept="image/jpeg,image/png,image/webp" required>
+          <p class="form-hint">JPG, PNG or WebP · max 4 MB</p>
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Caption (EN)</label>
+          <input class="form-control" name="description_en" placeholder="Image caption in English">
+        </div>
+        <div class="form-group" style="margin:0;">
+          <label class="form-label">Caption (FR)</label>
+          <input class="form-control" name="description_fr" placeholder="Légende en Français">
+        </div>
       </div>
-    </div>
+      <div style="margin-top:16px;">
+        <button class="btn btn-primary" type="submit">
+          <i class="bi bi-cloud-upload-fill"></i> Upload Image
+        </button>
+      </div>
+    </form>
   </div>
 </div>
+
+<!-- Gallery grid -->
+<?php if (empty($items)): ?>
+  <div class="admin-card">
+    <div class="empty-state">
+      <i class="bi bi-images"></i>
+      <p>No gallery images yet. Upload your first image above.</p>
+    </div>
+  </div>
+<?php else: ?>
+  <div class="gallery-grid">
+    <?php foreach ($items as $item): ?>
+      <div class="gallery-item">
+        <img src="<?php echo escape($item['image_path']); ?>" alt="<?php echo escape($item['description_en'] ?? ''); ?>">
+        <div class="gallery-item-footer">
+          <span class="gallery-item-desc"><?php echo escape($item['description_en'] ?: '—'); ?></span>
+          <form method="post" onsubmit="return confirm('Delete this image?');">
+            <input type="hidden" name="csrf_token" value="<?php echo escape(csrf_token()); ?>">
+            <input type="hidden" name="action" value="delete">
+            <input type="hidden" name="gallery_id" value="<?php echo $item['id']; ?>">
+            <button class="btn btn-sm btn-danger btn-icon" type="submit" title="Delete">
+              <i class="bi bi-trash-fill"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    <?php endforeach; ?>
+  </div>
+<?php endif; ?>
+
+<style>
+@media (max-width: 768px) {
+  .admin-card-body > form > div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
 <?php include __DIR__ . '/_footer.php'; ?>

@@ -1,0 +1,20 @@
+# Local Claude Code agent files (memory, settings, transcripts)
+.claude/
+
+# SQLite database — contains admin password hash + submitted messages/applications
+smartrack.db
+smartrack.db-wal
+smartrack.db-shm
+
+# Static export / build output
+dist/
+
+# Applicant CV uploads (personal data)
+uploads/cv/
+uploads/cvs/
+uploads/applications/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log

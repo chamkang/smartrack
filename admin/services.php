@@ -1,122 +1,240 @@
 <?php
 require_once __DIR__ . '/../includes/functions.php';
 require_admin();
-$pageTitle = 'Manage Services';
+$pageTitle = 'Services';
 $error = '';
+$saved = false;
 $action = $_POST['action'] ?? '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!verify_csrf($_POST['csrf_token'] ?? '')) {
-        $error = 'Invalid CSRF token.';
+        $error = 'Invalid security token.';
     } elseif ($action === 'delete' && !empty($_POST['service_id'])) {
-        $stmt = db()->prepare('DELETE FROM services WHERE id = :id');
-        $stmt->execute([':id' => (int) $_POST['service_id']]);
+        db()->prepare('DELETE FROM services WHERE id = ?')->execute([(int)$_POST['service_id']]);
         redirect('services.php');
     } elseif ($action === 'save') {
-        $serviceId = !empty($_POST['service_id']) ? (int) $_POST['service_id'] : null;
-        $slug = trim($_POST['slug'] ?? '');
-        $titleEn = trim($_POST['title_en'] ?? '');
-        $titleFr = trim($_POST['title_fr'] ?? '');
+        $serviceId = !empty($_POST['service_id']) ? (int)$_POST['service_id'] : null;
+        $slug      = trim($_POST['slug']       ?? '');
+        $titleEn   = trim($_POST['title_en']   ?? '');
+        $titleFr   = trim($_POST['title_fr']   ?? '');
         $summaryEn = trim($_POST['summary_en'] ?? '');
         $summaryFr = trim($_POST['summary_fr'] ?? '');
         $contentEn = trim($_POST['content_en'] ?? '');
         $contentFr = trim($_POST['content_fr'] ?? '');
 
         if ($slug === '' || $titleEn === '' || $summaryEn === '') {
-            $error = 'Service slug, English title, and English summary are required.';
+            $error = 'Slug, English title, and English summary are required.';
         } else {
-            try {
-                $imagePath = upload_image('image', 'services');
-            } catch (RuntimeException $uploadError) {
-                $error = $uploadError->getMessage();
-            }
+            $imagePath = null;
+            try { $imagePath = upload_image('image', 'services'); }
+            catch (RuntimeException $e) { $error = $e->getMessage(); }
 
             if (!$error) {
                 if ($serviceId) {
                     if ($imagePath) {
-                        $stmt = db()->prepare('UPDATE services SET slug = :slug, title_en = :title_en, title_fr = :title_fr, summary_en = :summary_en, summary_fr = :summary_fr, content_en = :content_en, content_fr = :content_fr, image_path = :image_path, updated_at = NOW() WHERE id = :id');
-                        $stmt->execute([':slug' => $slug, ':title_en' => $titleEn, ':title_fr' => $titleFr, ':summary_en' => $summaryEn, ':summary_fr' => $summaryFr, ':content_en' => $contentEn, ':content_fr' => $contentFr, ':image_path' => $imagePath, ':id' => $serviceId]);
+                        db()->prepare('UPDATE services SET slug=?,title_en=?,title_fr=?,summary_en=?,summary_fr=?,content_en=?,content_fr=?,image_path=?,updated_at=CURRENT_TIMESTAMP WHERE id=?')
+                           ->execute([$slug,$titleEn,$titleFr,$summaryEn,$summaryFr,$contentEn,$contentFr,$imagePath,$serviceId]);
                     } else {
-                        $stmt = db()->prepare('UPDATE services SET slug = :slug, title_en = :title_en, title_fr = :title_fr, summary_en = :summary_en, summary_fr = :summary_fr, content_en = :content_en, content_fr = :content_fr, updated_at = NOW() WHERE id = :id');
-                        $stmt->execute([':slug' => $slug, ':title_en' => $titleEn, ':title_fr' => $titleFr, ':summary_en' => $summaryEn, ':summary_fr' => $summaryFr, ':content_en' => $contentEn, ':content_fr' => $contentFr, ':id' => $serviceId]);
+                        db()->prepare('UPDATE services SET slug=?,title_en=?,title_fr=?,summary_en=?,summary_fr=?,content_en=?,content_fr=?,updated_at=CURRENT_TIMESTAMP WHERE id=?')
+                           ->execute([$slug,$titleEn,$titleFr,$summaryEn,$summaryFr,$contentEn,$contentFr,$serviceId]);
                     }
                 } else {
-                    $stmt = db()->prepare('INSERT INTO services (slug, title_en, title_fr, summary_en, summary_fr, content_en, content_fr, image_path, created_at, updated_at) VALUES (:slug, :title_en, :title_fr, :summary_en, :summary_fr, :content_en, :content_fr, :image_path, NOW(), NOW())');
-                    $stmt->execute([':slug' => $slug, ':title_en' => $titleEn, ':title_fr' => $titleFr, ':summary_en' => $summaryEn, ':summary_fr' => $summaryFr, ':content_en' => $contentEn, ':content_fr' => $contentFr, ':image_path' => $imagePath]);
+                    db()->prepare('INSERT INTO services (slug,title_en,title_fr,summary_en,summary_fr,content_en,content_fr,image_path,created_at,updated_at) VALUES (?,?,?,?,?,?,?,?,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP)')
+                       ->execute([$slug,$titleEn,$titleFr,$summaryEn,$summaryFr,$contentEn,$contentFr,$imagePath]);
                 }
-                redirect('services.php');
+                redirect('services.php?saved=1');
             }
         }
     }
 }
 
-$services = db()->query('SELECT * FROM services ORDER BY created_at DESC')->fetchAll();
-$editingService = null;
+$saved = isset($_GET['saved']);
+$services = db()->query('SELECT * FROM services ORDER BY sort_order ASC, created_at DESC')->fetchAll();
+
+$editing = null;
 if (!empty($_GET['edit'])) {
-    $stmt = db()->prepare('SELECT * FROM services WHERE id = :id LIMIT 1');
-    $stmt->execute([':id' => (int) $_GET['edit']]);
-    $editingService = $stmt->fetch();
+    $stmt = db()->prepare('SELECT * FROM services WHERE id = ? LIMIT 1');
+    $stmt->execute([(int)$_GET['edit']]);
+    $editing = $stmt->fetch();
 }
+
 define('APP_INIT_ADMIN', true);
 include __DIR__ . '/_header.php';
 ?>
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h1>Services</h1>
+
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Services</h1>
+    <p class="page-subtitle">Manage the services displayed on your website.</p>
+  </div>
 </div>
+
 <?php if ($error): ?>
-  <div class="alert alert-danger"><?php echo escape($error); ?></div>
+  <div class="admin-alert danger"><i class="bi bi-exclamation-triangle-fill admin-alert-icon"></i><?php echo escape($error); ?></div>
 <?php endif; ?>
-<div class="row gy-4">
-  <div class="col-lg-6">
-    <div class="card p-4">
-      <h5><?php echo $editingService ? 'Edit Service' : 'Add Service'; ?></h5>
+<?php if ($saved): ?>
+  <div class="admin-alert success"><i class="bi bi-check-circle-fill admin-alert-icon"></i>Service saved successfully.</div>
+<?php endif; ?>
+
+<div style="display:grid;grid-template-columns:420px 1fr;gap:24px;align-items:start;">
+
+  <!-- ── Form ── -->
+  <div class="admin-card" style="position:sticky;top:calc(var(--topbar-h) + 20px);">
+    <div class="admin-card-header">
+      <div class="admin-card-title">
+        <i class="bi bi-<?php echo $editing ? 'pencil-fill' : 'plus-circle-fill'; ?>"></i>
+        <?php echo $editing ? 'Edit Service' : 'Add Service'; ?>
+      </div>
+      <?php if ($editing): ?>
+        <a href="services.php" class="btn btn-sm btn-secondary">Cancel</a>
+      <?php endif; ?>
+    </div>
+    <div class="admin-card-body">
       <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" value="<?php echo escape(csrf_token()); ?>">
         <input type="hidden" name="action" value="save">
-        <?php if ($editingService): ?>
-          <input type="hidden" name="service_id" value="<?php echo escape($editingService['id']); ?>">
+        <?php if ($editing): ?>
+          <input type="hidden" name="service_id" value="<?php echo escape($editing['id']); ?>">
         <?php endif; ?>
-        <div class="mb-3"><label class="form-label">Slug</label><input class="form-control" name="slug" value="<?php echo escape($editingService['slug'] ?? ''); ?>" required></div>
-        <div class="mb-3"><label class="form-label">Title (EN)</label><input class="form-control" name="title_en" value="<?php echo escape($editingService['title_en'] ?? ''); ?>" required></div>
-        <div class="mb-3"><label class="form-label">Title (FR)</label><input class="form-control" name="title_fr" value="<?php echo escape($editingService['title_fr'] ?? ''); ?>"></div>
-        <div class="mb-3"><label class="form-label">Summary (EN)</label><textarea class="form-control" name="summary_en" rows="2" required><?php echo escape($editingService['summary_en'] ?? ''); ?></textarea></div>
-        <div class="mb-3"><label class="form-label">Summary (FR)</label><textarea class="form-control" name="summary_fr" rows="2"><?php echo escape($editingService['summary_fr'] ?? ''); ?></textarea></div>
-        <div class="mb-3"><label class="form-label">Content (EN)</label><textarea class="form-control" name="content_en" rows="4"><?php echo escape($editingService['content_en'] ?? ''); ?></textarea></div>
-        <div class="mb-3"><label class="form-label">Content (FR)</label><textarea class="form-control" name="content_fr" rows="4"><?php echo escape($editingService['content_fr'] ?? ''); ?></textarea></div>
-        <div class="mb-3"><label class="form-label">Image</label><input class="form-control" type="file" name="image" accept="image/jpeg,image/png,image/webp"></div>
-        <?php if (!empty($editingService['image_path'])): ?>
-          <div class="mb-3"><img src="<?php echo escape($editingService['image_path']); ?>" class="img-fluid rounded" alt="Service image"></div>
-        <?php endif; ?>
-        <button class="btn btn-primary w-100" type="submit"><?php echo $editingService ? 'Update Service' : 'Create Service'; ?></button>
+
+        <div class="form-group">
+          <label class="form-label">Slug <span class="required">*</span></label>
+          <input class="form-control" name="slug" value="<?php echo escape($editing['slug'] ?? ''); ?>" placeholder="e.g. vehicle-tracking" required>
+          <p class="form-hint">URL-friendly identifier, lowercase with hyphens.</p>
+        </div>
+
+        <div class="lang-tabs" id="langTabs">
+          <button type="button" class="lang-tab active" data-lang="en">🇬🇧 English</button>
+          <button type="button" class="lang-tab" data-lang="fr">🇫🇷 French</button>
+        </div>
+
+        <!-- English fields -->
+        <div id="fields-en">
+          <div class="form-group">
+            <label class="form-label">Title (EN) <span class="required">*</span></label>
+            <input class="form-control" name="title_en" value="<?php echo escape($editing['title_en'] ?? ''); ?>" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Summary (EN) <span class="required">*</span></label>
+            <textarea class="form-control" name="summary_en" rows="2" required><?php echo escape($editing['summary_en'] ?? ''); ?></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Full Content (EN)</label>
+            <textarea class="form-control" name="content_en" rows="4"><?php echo escape($editing['content_en'] ?? ''); ?></textarea>
+          </div>
+        </div>
+
+        <!-- French fields -->
+        <div id="fields-fr" style="display:none;">
+          <div class="form-group">
+            <label class="form-label">Title (FR)</label>
+            <input class="form-control" name="title_fr" value="<?php echo escape($editing['title_fr'] ?? ''); ?>">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Summary (FR)</label>
+            <textarea class="form-control" name="summary_fr" rows="2"><?php echo escape($editing['summary_fr'] ?? ''); ?></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Full Content (FR)</label>
+            <textarea class="form-control" name="content_fr" rows="4"><?php echo escape($editing['content_fr'] ?? ''); ?></textarea>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Service Image</label>
+          <input class="form-control" type="file" name="image" accept="image/jpeg,image/png,image/webp">
+          <p class="form-hint">JPG, PNG or WebP · max 4 MB</p>
+          <?php if (!empty($editing['image_path'])): ?>
+            <div class="img-preview-wrap mt-2">
+              <img src="<?php echo escape($editing['image_path']); ?>" alt="Current">
+            </div>
+          <?php endif; ?>
+        </div>
+
+        <button class="btn btn-primary" style="width:100%;" type="submit">
+          <i class="bi bi-check-lg"></i>
+          <?php echo $editing ? 'Update Service' : 'Create Service'; ?>
+        </button>
       </form>
     </div>
   </div>
-  <div class="col-lg-6">
-    <div class="card p-4">
-      <h5>Existing Services</h5>
-      <div class="table-responsive">
-        <table class="table table-striped">
-          <thead><tr><th>ID</th><th>Slug</th><th>EN Title</th><th>Actions</th></tr></thead>
-          <tbody>
-          <?php foreach ($services as $service): ?>
-            <tr>
-              <td><?php echo escape($service['id']); ?></td>
-              <td><?php echo escape($service['slug']); ?></td>
-              <td><?php echo escape($service['title_en']); ?></td>
-              <td>
-                <a class="btn btn-sm btn-secondary" href="services.php?edit=<?php echo escape($service['id']); ?>">Edit</a>
-                <form method="post" class="d-inline" onsubmit="return confirm('Delete this service?');">
+
+  <!-- ── List ── -->
+  <div>
+    <?php if (empty($services)): ?>
+      <div class="admin-card">
+        <div class="empty-state">
+          <i class="bi bi-geo-alt"></i>
+          <p>No services yet. Add your first service using the form.</p>
+        </div>
+      </div>
+    <?php else: ?>
+      <div style="display:flex;flex-direction:column;gap:14px;">
+        <?php foreach ($services as $s): ?>
+          <div class="admin-card" style="overflow:visible;">
+            <div style="display:flex;align-items:center;gap:16px;padding:18px 22px;">
+              <?php if (!empty($s['image_path'])): ?>
+                <img src="<?php echo escape($s['image_path']); ?>" class="table-thumb" style="width:72px;height:56px;" alt="">
+              <?php else: ?>
+                <div style="width:72px;height:56px;border-radius:8px;background:rgba(229,57,53,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                  <i class="bi bi-geo-alt-fill" style="color:var(--accent);font-size:1.5rem;"></i>
+                </div>
+              <?php endif; ?>
+              <div style="flex:1;min-width:0;">
+                <div style="font-weight:700;font-size:.95rem;"><?php echo escape($s['title_en']); ?></div>
+                <?php if (!empty($s['title_fr'])): ?>
+                  <div style="font-size:.8rem;color:var(--text-muted);"><?php echo escape($s['title_fr']); ?></div>
+                <?php endif; ?>
+                <div style="margin-top:4px;">
+                  <span class="badge badge-neutral"><?php echo escape($s['slug']); ?></span>
+                </div>
+              </div>
+              <div style="display:flex;gap:8px;flex-shrink:0;">
+                <a href="services.php?edit=<?php echo $s['id']; ?>" class="btn btn-sm btn-secondary">
+                  <i class="bi bi-pencil-fill"></i> Edit
+                </a>
+                <form method="post" onsubmit="return confirm('Delete this service?');">
                   <input type="hidden" name="csrf_token" value="<?php echo escape(csrf_token()); ?>">
                   <input type="hidden" name="action" value="delete">
-                  <input type="hidden" name="service_id" value="<?php echo escape($service['id']); ?>">
-                  <button class="btn btn-sm btn-danger" type="submit">Delete</button>
+                  <input type="hidden" name="service_id" value="<?php echo $s['id']; ?>">
+                  <button class="btn btn-sm btn-danger" type="submit">
+                    <i class="bi bi-trash-fill"></i> Delete
+                  </button>
                 </form>
-              </td>
-            </tr>
-          <?php endforeach; ?>
-          </tbody>
-        </table>
+              </div>
+            </div>
+            <?php if (!empty($s['summary_en'])): ?>
+              <div style="padding:0 22px 16px;color:var(--text-muted);font-size:.85rem;border-top:1px solid var(--border);">
+                <div style="padding-top:12px;"><?php echo escape($s['summary_en']); ?></div>
+              </div>
+            <?php endif; ?>
+          </div>
+        <?php endforeach; ?>
       </div>
-    </div>
+    <?php endif; ?>
   </div>
+
 </div>
+
+<script>
+  // Language tab switcher
+  document.querySelectorAll('.lang-tab').forEach(btn => {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.lang-tab').forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      const lang = this.dataset.lang;
+      document.getElementById('fields-en').style.display = lang === 'en' ? '' : 'none';
+      document.getElementById('fields-fr').style.display = lang === 'fr' ? '' : 'none';
+    });
+  });
+</script>
+
+<style>
+@media (max-width: 900px) {
+  .admin-content > div[style*="grid-template-columns:420px"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+</style>
+
 <?php include __DIR__ . '/_footer.php'; ?>

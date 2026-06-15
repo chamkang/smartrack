@@ -1611,7 +1611,18 @@ section,
   transition: 0.3s;
 }
 
+.recent-blog-posts .post-item .post-img {
+  height: 240px;
+  overflow: hidden;
+  display: block;
+}
+
 .recent-blog-posts .post-item .post-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  max-width: none !important;
   transition: 0.5s;
 }
 
@@ -2214,7 +2225,18 @@ section,
   transition: 0.3s;
 }
 
+.blog-posts .post-img {
+  height: 240px;
+  overflow: hidden;
+  display: block;
+}
+
 .blog-posts .post-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  max-width: none !important;
   transition: 0.5s;
 }
 
