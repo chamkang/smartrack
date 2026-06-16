@@ -18,3 +18,10 @@ uploads/applications/
 .DS_Store
 Thumbs.db
 *.log
+
+# Generated DB migration (contains admin password hash)
+supabase-migration.sql
+_pgexport.php
+
+# Split DB migration files (04 contains admin hash)
+db/
