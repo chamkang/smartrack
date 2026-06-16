@@ -193,7 +193,7 @@ include __DIR__ . '/includes/header.php';
           <img src="<?php echo escape(site_url('assets/img/implantation-SMARTRACK-AFRICA-1.png')); ?>"
                alt="Smartrack Africa">
           <div class="abt-badge">
-            <span>2018</span>
+            <span>2006</span>
             <p><?php echo escape(get_translation('about_founded')); ?></p>
           </div>
         </div>
@@ -424,7 +424,7 @@ include __DIR__ . '/includes/header.php';
         <div class="abt-timeline">
           <?php
           $milestones = [
-            ['2018',
+            ['2006',
               t('Company Founded',          'Fondation de l\'Entreprise'),
               t('Smartrack Africa was incorporated in Douala with a founding team of 3 engineers and a mission to bring reliable fleet tracking to Cameroon.',
                 "Smartrack Africa a été créée à Douala avec une équipe fondatrice de 3 ingénieurs et la mission d'apporter un suivi de flotte fiable au Cameroun.")],
