@@ -99,7 +99,7 @@ function t(string $en, string $fr = ''): string {
  * Call once per page: $tr = load_translations();
  * Then use: $tr['key'] ?? 'fallback'
  */
-function load_translations(string $lang = null): array {
+function load_translations(?string $lang = null): array {
     $lang = $lang ?: current_language();
     static $cache = [];
     if (!isset($cache[$lang])) {
@@ -110,7 +110,7 @@ function load_translations(string $lang = null): array {
     return $cache[$lang];
 }
 
-function get_translation(string $key, string $lang = null): string
+function get_translation(string $key, ?string $lang = null): string
 {
     $lang = $lang ?: current_language();
     $tr   = load_translations($lang);
