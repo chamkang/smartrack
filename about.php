@@ -314,7 +314,8 @@ include __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- ══ § 4  FOUNDER ═════════════════════════════════════════════════════════ -->
+<!-- ══ § 4  FOUNDER  (hidden for now — delete the if-guard below to restore) ══ -->
+<?php if (false): ?>
 <section class="section" style="background:linear-gradient(135deg,#f8f9fb 0%,#fff 100%);">
   <div class="container">
     <div class="section-title" data-aos="fade-up">
@@ -401,6 +402,7 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 </section>
+<?php endif; /* end hidden Founder section */ ?>
 
 <!-- ══ § 5  JOURNEY / TIMELINE ══════════════════════════════════════════════ -->
 <section class="section" style="background:linear-gradient(135deg,#0b0e1a 0%,#111622 100%);">
@@ -465,7 +467,8 @@ include __DIR__ . '/includes/header.php';
   </div>
 </section>
 
-<!-- ══ § 6  TEAM ════════════════════════════════════════════════════════════ -->
+<!-- ══ § 6  TEAM  (hidden for now — delete the if-guard below to restore) ═════ -->
+<?php if (false): ?>
 <section class="section" style="background:#f8f9fb;">
   <div class="container">
     <div class="section-title" data-aos="fade-up">
@@ -525,6 +528,7 @@ include __DIR__ . '/includes/header.php';
     </p>
   </div>
 </section>
+<?php endif; /* end hidden Team section */ ?>
 
 <!-- ══ § 7  WHY AFRICA ══════════════════════════════════════════════════════ -->
 <section class="section" style="background:#fff;">
