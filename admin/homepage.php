@@ -184,7 +184,7 @@ include __DIR__ . '/_header.php';
       <?php
       $promoMeta = [
           1 => ['name' => 'Slide 1', 'theme' => 'Red — promotion / offer'],
-          2 => ['name' => 'Slide 2', 'theme' => 'Blue — feature announcement'],
+          2 => ['name' => 'Slide 2', 'theme' => 'Red — feature announcement'],
       ];
       foreach ([1, 2] as $n):
       ?>

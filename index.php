@@ -1,7 +1,12 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = 'Smartrack — GPS Fleet Tracking & Security Solutions';
+$pageTitle = t('Smartrack Africa — GPS Fleet Tracking & Vehicle Security in Cameroon',
+               'Smartrack Africa — Suivi GPS de Flotte & Sécurité Véhicule au Cameroun');
+$metaDescription = t(
+  'Real-time GPS vehicle tracking, fuel monitoring and fleet security for businesses in Cameroon and Central Africa. Cut fuel costs up to 30%, stop theft, and manage your whole fleet from one dashboard. 24/7 local support in English and French.',
+  "Suivi GPS de véhicules en temps réel, surveillance du carburant et sécurité de flotte pour les entreprises au Cameroun et en Afrique centrale. Réduisez les coûts de carburant jusqu'à 30%, stoppez le vol et gérez toute votre flotte depuis un seul tableau de bord. Support local 24h/7j en français et en anglais."
+);
 $bodyClass = 'index-page';
 $lang      = current_language();
 
@@ -18,7 +23,7 @@ $contact       = get_contact();
 // Each field falls back to the default below if no admin value has been saved.
 $promoThemes = [
     1 => ['grad1'=>'#e60000','grad2'=>'#c40000','btn'=>'#e60000','icon'=>'bi-lightning-fill','alt'=>'Limited Time Offer'],
-    2 => ['grad1'=>'#2563eb','grad2'=>'#1d4ed8','btn'=>'#2563eb','icon'=>'bi-fingerprint','alt'=>'Advanced Security'],
+    2 => ['grad1'=>'#e60000','grad2'=>'#9b0000','btn'=>'#e60000','icon'=>'bi-fingerprint','alt'=>'Advanced Security'],
 ];
 $promoDefaults = [
     1 => [
@@ -335,7 +340,7 @@ include __DIR__ . '/includes/header.php';
 
 /* ── 3D Dashboard Showcase ── */
 .idx-showcase {
-  background:linear-gradient(135deg,#080b18 0%,#0f1627 100%);
+  background:linear-gradient(135deg,#000 0%,#0a0a0a 100%);
   overflow:hidden;position:relative;
 }
 .idx-showcase::before {
@@ -453,7 +458,7 @@ include __DIR__ . '/includes/header.php';
 
 /* ── Why Smartrack (dark) ── */
 .idx-why {
-  background:linear-gradient(135deg,#0b0e1a 0%,#111622 100%);
+  background:linear-gradient(135deg,#000 0%,#0a0a0a 100%);
   color:#fff;
   position:relative;
   overflow:hidden;
@@ -1104,6 +1109,109 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 </section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     § 7.5  FAQ  (also emitted as FAQPage structured data for SEO)
+════════════════════════════════════════════════════════════ -->
+<?php
+$faqs = [
+  [ t('How much does GPS vehicle tracking cost in Cameroon?',
+      'Combien coûte le suivi GPS de véhicules au Cameroun ?'),
+    t('Pricing depends on your fleet size and the features you need — tracking only, or tracking plus fuel monitoring, cameras and security. Most clients recover the monthly cost within the first 2–3 weeks through fuel and overtime savings alone. Contact us for a free, no-commitment quote tailored to your fleet.',
+      "Le tarif dépend de la taille de votre flotte et des fonctionnalités souhaitées — suivi seul, ou suivi avec surveillance carburant, caméras et sécurité. La plupart des clients rentabilisent le coût mensuel dès les 2 à 3 premières semaines grâce aux économies de carburant et d'heures supplémentaires. Contactez-nous pour un devis gratuit et sans engagement.") ],
+
+  [ t('How long does installation take?',
+      "Combien de temps prend l'installation ?"),
+    t('A certified Smartrack technician installs a discreet GPS tracker in under 30 minutes per vehicle, with no downtime for your operations. Fuel sensors and camera systems take around 2 hours. We can install at your premises anywhere in Douala, Yaoundé and Bafoussam.',
+      "Un technicien certifié Smartrack installe un traceur GPS discret en moins de 30 minutes par véhicule, sans interrompre vos opérations. Les capteurs de carburant et systèmes de caméras prennent environ 2 heures. Nous intervenons sur votre site à Douala, Yaoundé et Bafoussam.") ],
+
+  [ t('Does the tracker still work if there is no mobile network?',
+      "Le traceur fonctionne-t-il sans réseau mobile ?"),
+    t('Yes. The device stores up to 30 days of trip data onboard and uploads everything automatically as soon as a network connection is available, so you never lose history when a vehicle travels through a coverage gap.',
+      "Oui. L'appareil stocke jusqu'à 30 jours de données de trajet en local et les transmet automatiquement dès qu'une connexion réseau est disponible : vous ne perdez jamais l'historique lorsqu'un véhicule traverse une zone non couverte.") ],
+
+  [ t('Can I really cut fuel costs with fuel monitoring?',
+      'Puis-je vraiment réduire mes coûts de carburant ?'),
+    t('Yes — clients typically see up to 30% savings. Precision sensors measure tank levels to ±1% accuracy and alert you within a minute of any unexplained drop, so siphoning and unauthorised refuelling stop quickly. Many clients report reductions in the first 30 days simply because drivers know they are monitored.',
+      "Oui — les clients constatent généralement jusqu'à 30% d'économies. Des capteurs de précision mesurent le niveau du réservoir à ±1% près et vous alertent en moins d'une minute en cas de baisse inexpliquée, ce qui stoppe rapidement le siphonnage. Beaucoup constatent une baisse dès les 30 premiers jours, simplement parce que les conducteurs se savent surveillés.") ],
+
+  [ t('Can I track my vehicles from my phone?',
+      'Puis-je suivre mes véhicules depuis mon téléphone ?'),
+    t('Yes. Your Smartrack dashboard works in any web browser and on our mobile app. You can view live vehicle positions, replay past trips, set geofence zones and receive instant SMS or push alerts — from anywhere in the world.',
+      "Oui. Votre tableau de bord Smartrack fonctionne dans tout navigateur web et sur notre application mobile. Vous pouvez voir les positions en direct, rejouer les trajets, définir des géozones et recevoir des alertes SMS ou push instantanées — depuis n'importe où dans le monde.") ],
+
+  [ t('What happens if one of my vehicles is stolen?',
+      "Que se passe-t-il si un de mes véhicules est volé ?"),
+    t('You can track the vehicle live and remotely cut the engine from your phone or dashboard in under 60 seconds. Our Cameroon-based control room operates 24/7 and escalates to local authorities when needed. Timestamped, GPS-tagged logs are accepted by major insurers to support your claim.',
+      "Vous pouvez suivre le véhicule en direct et couper le moteur à distance depuis votre téléphone en moins de 60 secondes. Notre centre de contrôle au Cameroun fonctionne 24h/7j et alerte les autorités locales si nécessaire. Les journaux horodatés et géolocalisés sont acceptés par les principaux assureurs.") ],
+
+  [ t('Do you offer support in French and English?',
+      'Proposez-vous un support en français et en anglais ?'),
+    t('Yes. Our team is based in Douala and provides support around the clock in both French and English. The dashboard, mobile app, reports and documentation are all fully bilingual.',
+      "Oui. Notre équipe est basée à Douala et assure un support 24h/24 en français et en anglais. Le tableau de bord, l'application mobile, les rapports et la documentation sont entièrement bilingues.") ],
+];
+?>
+<section id="faq" class="section" style="background:#fff;">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2><?php echo escape(t('Frequently Asked Questions','Foire Aux Questions')); ?></h2>
+      <p><?php echo escape(t('Everything businesses in Cameroon ask us before getting started.',
+                             'Tout ce que les entreprises au Cameroun nous demandent avant de commencer.')); ?></p>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-lg-9" data-aos="fade-up" data-aos-delay="100">
+        <div class="accordion idx-faq" id="homeFaq">
+          <?php foreach ($faqs as $i => [$q, $a]): ?>
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button <?php echo $i > 0 ? 'collapsed' : ''; ?>" type="button"
+                        data-bs-toggle="collapse" data-bs-target="#faq-q<?php echo $i; ?>"
+                        aria-expanded="<?php echo $i === 0 ? 'true' : 'false'; ?>">
+                  <?php echo escape($q); ?>
+                </button>
+              </h3>
+              <div id="faq-q<?php echo $i; ?>" class="accordion-collapse collapse <?php echo $i === 0 ? 'show' : ''; ?>"
+                   data-bs-parent="#homeFaq">
+                <div class="accordion-body"><?php echo escape($a); ?></div>
+              </div>
+            </div>
+          <?php endforeach; ?>
+        </div>
+
+        <p class="text-center mt-4" style="color:#64748b;font-size:.92rem;">
+          <?php echo escape(t('Still have a question?','Une autre question ?')); ?>
+          <a href="<?php echo escape(site_url('contact.php')); ?>" style="color:#e60000;font-weight:700;">
+            <?php echo escape(t('Talk to our team →','Parlez à notre équipe →')); ?>
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.idx-faq .accordion-item { border:1px solid #eef0f2;border-radius:12px !important;margin-bottom:10px;overflow:hidden; }
+.idx-faq .accordion-button { font-weight:700;font-size:.98rem;color:#1a202c;background:#fff;padding:18px 22px; }
+.idx-faq .accordion-button:not(.collapsed) { background:#fff8f8;color:#e60000;box-shadow:none; }
+.idx-faq .accordion-button:focus { box-shadow:none;border-color:transparent; }
+.idx-faq .accordion-body { font-size:.92rem;color:#5a6473;line-height:1.8;background:#fcfcfd;padding:18px 22px; }
+</style>
+
+<!-- FAQPage structured data — enables rich results in Google -->
+<script type="application/ld+json">
+<?php
+echo json_encode([
+  '@context' => 'https://schema.org',
+  '@type'    => 'FAQPage',
+  'mainEntity' => array_map(fn($f) => [
+      '@type' => 'Question',
+      'name'  => $f[0],
+      'acceptedAnswer' => ['@type' => 'Answer', 'text' => $f[1]],
+  ], $faqs),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
+?>
+</script>
 
 <!-- ═══════════════════════════════════════════════════════════
      § 8  CTA BANNER  (replaces misplaced quote form)

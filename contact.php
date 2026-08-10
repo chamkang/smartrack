@@ -2,7 +2,11 @@
 require_once __DIR__ . '/includes/functions.php';
 init_session();
 
-$pageTitle = 'Contact - Smartrack';
+$pageTitle = t('Contact Us — Smartrack Africa, Douala','Contactez-nous — Smartrack Africa, Douala');
+$metaDescription = t(
+  'Get a free quote or talk to a Smartrack Africa expert. Offices in Douala, Cameroon. Call +237 691 415 588 or send a message — we reply within 24 hours.',
+  "Obtenez un devis gratuit ou parlez à un expert Smartrack Africa. Bureaux à Douala, Cameroun. Appelez le +237 691 415 588 ou envoyez un message — nous répondons sous 24 heures."
+);
 $bodyClass = 'contact-page';
 $lang      = current_language();
 $contact   = get_contact();

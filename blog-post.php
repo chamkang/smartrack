@@ -49,7 +49,14 @@ $recent = db()->query(
      ORDER BY published_at DESC LIMIT 5'
 )->fetchAll();
 
-$pageTitle = $title . ' - Smartrack Blog';
+$pageTitle = $title . ' — Smartrack Africa Blog';
+$metaDescription = trim(preg_replace('/\s+/', ' ', strip_tags($excerpt ?: $content)));
+$ogImage = $post['image_path'] ?: 'assets/img/blog/blog-1.jpg';
+$articleMeta = [
+    'published' => $post['published_at'] ?? null,
+    'author'    => $post['author'] ?? 'Smartrack Africa',
+    'category'  => $post['category'] ?? null,
+];
 $bodyClass = 'blog-details-page';
 
 define('APP_INIT', true);

@@ -1,0 +1,20 @@
+User-agent: *
+Allow: /
+
+# Private / non-content areas
+Disallow: /admin/
+Disallow: /cms/
+Disallow: /includes/
+Disallow: /forms/
+Disallow: /uploads/cv/
+Disallow: /setup.php
+Disallow: /contact-submit.php
+Disallow: /contact-unified.php
+Disallow: /quote-submit.php
+Disallow: /apply-submit.php
+Disallow: /translations.php
+
+# Avoid indexing duplicate language-parameter URLs (hreflang handles these)
+Disallow: /*?lang=
+
+Sitemap: /sitemap.xml

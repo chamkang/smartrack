@@ -117,20 +117,43 @@ function get_translation(string $key, ?string $lang = null): string
     return $tr[$key] ?? $key;
 }
 
+/**
+ * Bulk-load every homepage_content row once per request.
+ * The homepage alone reads ~20 keys (hero + promo carousel); without this each
+ * one was a separate query.
+ */
+function load_content_values(bool $refresh = false): array
+{
+    static $cache = null;
+    if ($cache === null || $refresh) {
+        $cache = db()->query('SELECT content_key, value FROM homepage_content')
+                     ->fetchAll(PDO::FETCH_KEY_PAIR);
+    }
+    return $cache;
+}
+
 function get_content_value(string $key): ?string
 {
-    $stmt = db()->prepare('SELECT value FROM homepage_content WHERE content_key = ? LIMIT 1');
-    $stmt->execute([$key]);
-    $result = $stmt->fetchColumn();
-    return $result !== false ? $result : null;
+    $all = load_content_values();
+    return array_key_exists($key, $all) ? $all[$key] : null;
 }
 
 function set_content_value(string $key, string $value): void
 {
-    db()->prepare('
-        INSERT OR REPLACE INTO homepage_content (content_key, value, updated_at)
-        VALUES (?, ?, CURRENT_TIMESTAMP)
-    ')->execute([$key, $value]);
+    if (db_driver() === 'pgsql') {
+        db()->prepare('
+            INSERT INTO homepage_content (content_key, value, updated_at)
+            VALUES (?, ?, CURRENT_TIMESTAMP)
+            ON CONFLICT (content_key) DO UPDATE
+              SET value = EXCLUDED.value, updated_at = CURRENT_TIMESTAMP
+        ')->execute([$key, $value]);
+    } else {
+        db()->prepare('
+            INSERT OR REPLACE INTO homepage_content (content_key, value, updated_at)
+            VALUES (?, ?, CURRENT_TIMESTAMP)
+        ')->execute([$key, $value]);
+    }
+    load_content_values(true); // refresh cache so admin saves show immediately
 }
 
 function get_contact(): array
@@ -217,7 +240,15 @@ function upload_cv(string $fieldName): ?array
         throw new RuntimeException('Only PDF, DOC, and DOCX files are accepted for CVs.');
     }
 
-    $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION) ?: 'pdf');
+    // SECURITY: derive the extension from the verified MIME type, never from the
+    // user-supplied filename — otherwise "cv.php" with DOC-looking bytes would be
+    // saved as an executable .php file.
+    $ext = match ($mimeType) {
+        'application/pdf'  => 'pdf',
+        'application/msword' => 'doc',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'docx',
+        default => throw new RuntimeException('Unsupported CV file type.'),
+    };
     $filename = time() . '_' . bin2hex(random_bytes(8)) . '.' . $ext;
 
     $dir = UPLOAD_BASE_PATH . '/cvs';
@@ -260,7 +291,17 @@ function upload_media(string $fieldName, string $targetDir, array $allowedMimeTy
         throw new RuntimeException('Invalid file type.');
     }
 
-    $extension      = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION) ?: 'dat');
+    // SECURITY: map the verified MIME type to a safe extension. Never trust the
+    // extension in the uploaded file's name — it could be ".php".
+    $mimeExt = [
+        'image/jpeg' => 'jpg',  'image/png'  => 'png',   'image/webp' => 'webp',
+        'image/gif'  => 'gif',  'video/mp4'  => 'mp4',   'video/webm' => 'webm',
+        'application/pdf' => 'pdf',
+    ];
+    if (!isset($mimeExt[$mimeType])) {
+        throw new RuntimeException('Unsupported file type.');
+    }
+    $extension      = $mimeExt[$mimeType];
     $filename       = bin2hex(random_bytes(16)) . '.' . $extension;
     $destinationDir = UPLOAD_BASE_PATH . '/' . trim($targetDir, '/');
 

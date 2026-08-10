@@ -344,7 +344,11 @@ $serviceDetails = [
 $slug   = $service['slug'] ?? '';
 $detail = $serviceDetails[$slug] ?? null;
 
-$pageTitle = $title . ' - Smartrack';
+$pageTitle = $title . ' — Smartrack Africa';
+$metaDescription = trim(preg_replace('/\s+/', ' ', strip_tags($summary ?: $content)))
+                   ?: t('Professional ' . $title . ' services from Smartrack Africa in Cameroon.',
+                        'Services ' . $title . ' professionnels de Smartrack Africa au Cameroun.');
+if (!empty($service['image_path'])) { $ogImage = $service['image_path']; }
 $bodyClass = 'service-details-page';
 
 $others = db()->prepare('SELECT * FROM services WHERE id != ? ORDER BY sort_order ASC, created_at ASC LIMIT 6');

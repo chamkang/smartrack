@@ -133,6 +133,16 @@ a {
   color:#df1529; /* Red color */
 }
 
+/* Logo wordmark: the "T" is split half-and-half. Left half follows the logo
+   colour (black on light backgrounds, white over the dark hero) so it never
+   disappears; right half is always brand red. "RACK" stays red. */
+.sitename .logo-t-split {
+  background:linear-gradient(90deg,currentColor 0%,currentColor 50%,#df1529 50%,#df1529 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+
 a:hover {
   color: color-mix(in srgb, var(--accent-color), transparent 25%);
   text-decoration: none;

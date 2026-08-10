@@ -2,7 +2,12 @@
 require_once __DIR__ . '/includes/functions.php';
 init_session();
 
-$pageTitle = t('About Us — Smartrack Africa', 'À Propos — Smartrack Africa');
+$pageTitle = t('About Us — Smartrack Africa | GPS Tracking Since 2006',
+               'À Propos — Smartrack Africa | Suivi GPS Depuis 2006');
+$metaDescription = t(
+  'Founded in Douala in 2006, Smartrack Africa builds GPS tracking and security technology for African conditions. Trusted by SCB, BICEC, CFAO, Tractafric Motors and more across Cameroon.',
+  "Fondée à Douala en 2006, Smartrack Africa conçoit des technologies GPS et de sécurité adaptées aux conditions africaines. La confiance de SCB, BICEC, CFAO, Tractafric Motors et bien d'autres au Cameroun."
+);
 $bodyClass = 'about-page';
 $lang      = current_language();
 
@@ -14,9 +19,17 @@ include __DIR__ . '/includes/header.php';
 <div class="page-title dark-background"
      style="background-image:url(<?php echo escape(site_url('assets/img/page-title-bg.jpg')); ?>);">
   <div class="container position-relative">
-    <h1><?php echo escape(t('About Us','À Propos')); ?></h1>
-    <p style="color:rgba(255,255,255,.75);margin-top:8px;font-size:1rem;">
-      <?php echo escape(t("The team and story behind Africa's GPS & security platform.", "L'équipe et l'histoire de la plateforme GPS & sécurité d'Afrique.")); ?>
+    <div class="abt-hero-eyebrow">
+      <span class="dot"></span>
+      <?php echo escape(t('Since 2006 · Douala, Cameroon','Depuis 2006 · Douala, Cameroun')); ?>
+    </div>
+    <h1 class="abt-hero-title">
+      <?php echo t("Built for Africa.<br><span class='hl'>Trusted across it.</span>",
+                   "Conçu pour l'Afrique.<br><span class='hl'>Sa confiance, partout.</span>"); ?>
+    </h1>
+    <p class="abt-hero-sub">
+      <?php echo escape(t("Nearly two decades building GPS tracking and security technology that performs on African roads — backed by a local team that answers when you call.",
+                          "Près de deux décennies à concevoir des technologies GPS et de sécurité performantes sur les routes africaines — portées par une équipe locale qui répond quand vous appelez.")); ?>
     </p>
     <nav class="breadcrumbs">
       <ol>
@@ -28,6 +41,34 @@ include __DIR__ . '/includes/header.php';
 </div>
 
 <style>
+/* ── Hero ── */
+.abt-hero-eyebrow {
+  display:inline-flex;align-items:center;gap:9px;
+  background:rgba(230,0,0,.16);border:1px solid rgba(230,0,0,.38);
+  border-radius:30px;padding:6px 18px;margin-bottom:20px;
+  font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:rgba(255,255,255,.9);
+}
+.abt-hero-eyebrow .dot {
+  width:7px;height:7px;border-radius:50%;background:#e60000;
+  box-shadow:0 0 0 3px rgba(230,0,0,.3);animation:abt-pulse 2s infinite;
+}
+@keyframes abt-pulse{0%,100%{box-shadow:0 0 0 3px rgba(230,0,0,.3)}50%{box-shadow:0 0 0 7px rgba(230,0,0,.08)}}
+.abt-hero-title {
+  font-size:clamp(2.3rem,5.2vw,4rem);font-weight:900;color:#fff;
+  line-height:1.08;letter-spacing:-.035em;margin:0 0 18px;
+}
+.abt-hero-title .hl {
+  background:linear-gradient(90deg,#ff6b6b,#e60000);
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent;
+}
+.abt-hero-sub {
+  color:rgba(255,255,255,.72);font-size:1.05rem;line-height:1.8;
+  max-width:640px;margin:0;
+}
+@media(max-width:575px){ .abt-hero-sub{font-size:.95rem;} }
+
 /* ── General ── */
 .abt-section-tag {
   display:inline-block;background:rgba(230,0,0,.08);color:#e60000;
@@ -183,7 +224,7 @@ include __DIR__ . '/includes/header.php';
 </style>
 
 <!-- ══ § 1  OUR STORY ══════════════════════════════════════════════════════ -->
-<section class="section" style="background:#fff;padding-top:80px;">
+<section id="our-story" class="section" style="background:#fff;padding-top:80px;">
   <div class="container">
     <div class="row align-items-center gy-5">
 
@@ -405,7 +446,7 @@ include __DIR__ . '/includes/header.php';
 <?php endif; /* end hidden Founder section */ ?>
 
 <!-- ══ § 5  JOURNEY / TIMELINE ══════════════════════════════════════════════ -->
-<section class="section" style="background:linear-gradient(135deg,#0b0e1a 0%,#111622 100%);">
+<section class="section" style="background:linear-gradient(135deg,#000 0%,#0a0a0a 100%);">
   <div class="container">
     <div class="row gy-5 align-items-center">
 
@@ -529,6 +570,131 @@ include __DIR__ . '/includes/header.php';
   </div>
 </section>
 <?php endif; /* end hidden Team section */ ?>
+
+<!-- ══ § 6.5  PARTNERS & REFERENCES ═════════════════════════════════════════ -->
+<style>
+/* Logo marquee — continuous auto-scroll, no user interaction needed */
+.logo-marquee { overflow:hidden; position:relative; padding:8px 0; }
+.logo-marquee::before, .logo-marquee::after {
+  content:''; position:absolute; top:0; bottom:0; width:90px; z-index:2; pointer-events:none;
+}
+.logo-marquee.on-light::before { left:0;  background:linear-gradient(90deg,#fff,transparent); }
+.logo-marquee.on-light::after  { right:0; background:linear-gradient(270deg,#fff,transparent); }
+.logo-marquee.on-grey::before  { left:0;  background:linear-gradient(90deg,#f8f9fb,transparent); }
+.logo-marquee.on-grey::after   { right:0; background:linear-gradient(270deg,#f8f9fb,transparent); }
+
+.logo-track { display:flex; align-items:center; gap:26px; width:max-content; animation:logo-scroll 38s linear infinite; }
+.logo-track.reverse { animation-direction:reverse; }
+.logo-marquee:hover .logo-track { animation-play-state:paused; }
+@keyframes logo-scroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+/* Borderless: logos sit directly on the page for a cleaner, modern logo wall */
+.logo-chip {
+  flex:0 0 auto; height:88px; min-width:170px; padding:10px 22px;
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .3s;
+}
+.logo-chip:hover { transform:translateY(-3px); }
+/* Logos keep their real brand colours */
+.logo-chip img { max-height:52px; max-width:150px; width:auto; object-fit:contain;
+                 opacity:.95; transition:all .3s; }
+.logo-chip:hover img { opacity:1; transform:scale(1.04); }
+/* White-on-transparent logos would be invisible here — render them dark instead */
+.logo-chip img.is-light { filter:brightness(0); opacity:.7; }
+.logo-chip:hover img.is-light { filter:brightness(0); opacity:.95; }
+/* Text fallback shown until a real logo file is added */
+.logo-chip .logo-word { font-weight:800; font-size:1rem; letter-spacing:.02em; color:#8a8f98;
+                        text-align:center; line-height:1.25; text-transform:uppercase; transition:color .3s; }
+.logo-chip:hover .logo-word { color:#e60000; }
+@media(max-width:575px){ .logo-chip{ height:74px; min-width:140px; padding:8px 16px; } }
+</style>
+
+<?php
+/* Drop real logo files into /assets/img/partners or /assets/img/references using
+   the file name given below (.png, .svg, .jpg or .webp). Any logo that isn't
+   there yet automatically falls back to a clean text wordmark. */
+$logoDir = __DIR__ . '/assets/img/';
+$findLogo = function (string $folder, string $file) use ($logoDir) {
+    foreach (['png','svg','jpg','jpeg','webp'] as $ext) {
+        if (is_file($logoDir . $folder . '/' . $file . '.' . $ext)) {
+            return site_url('assets/img/' . $folder . '/' . $file . '.' . $ext);
+        }
+    }
+    return null;
+};
+
+$partners = [
+    ['monogoto',   'Monogoto'],
+    ['edrive',     'E-Drive Technology'],
+    ['mtn',        'MTN'],
+    ['orange',     'Orange'],
+    ['tyco',       'TYCO'],
+    ['topten',     'Top Ten'],
+];
+$references = [
+    ['scb',              'SCB'],
+    ['bicec',            'BICEC'],
+    ['sgc',              'SGC'],
+    ['abn',              'ABN'],
+    ['belife',           'Belife Insurance'],
+    ['tractafric',       'Tractafric Motors'],
+    ['longstar',         'Longstar Equipments'],
+    ['skymotors',        'Sky Motors'],
+    ['cfao',             'CFAO'],
+    ['addax',            'Addax Petroleum'],
+];
+
+/* Logos supplied only as a white/light version (made for dark backgrounds).
+   They'd be invisible on this light section, so they're rendered dark instead. */
+$lightLogos = ['tractafric'];
+
+// Render one chip (logo image when available, styled wordmark otherwise)
+$chip = function (array $item, string $folder) use ($findLogo, $lightLogos) {
+    [$file, $label] = $item;
+    $src = $findLogo($folder, $file);
+    echo '<div class="logo-chip">';
+    if ($src) {
+        $cls = in_array($file, $lightLogos, true) ? ' class="is-light"' : '';
+        echo '<img' . $cls . ' src="' . escape($src) . '" alt="' . escape($label) . '" loading="lazy">';
+    } else {
+        echo '<span class="logo-word">' . escape($label) . '</span>';
+    }
+    echo '</div>';
+};
+?>
+
+<!-- ── Our Partners ── -->
+<section id="our-partners" class="section" style="background:#fff;">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2><?php echo escape(t('Our Partners','Nos Partenaires')); ?></h2>
+      <p><?php echo escape(t('Technology and network partners we build with.',
+                             'Les partenaires technologiques et réseaux avec qui nous construisons.')); ?></p>
+    </div>
+  </div>
+  <div class="logo-marquee on-light" data-aos="fade-up" data-aos-delay="100">
+    <div class="logo-track">
+      <?php /* rendered twice so the loop is seamless */
+      for ($i = 0; $i < 2; $i++) { foreach ($partners as $p) { $chip($p, 'partners'); } } ?>
+    </div>
+  </div>
+</section>
+
+<!-- ── Our References ── -->
+<section id="our-references" class="section" style="background:#f8f9fb;">
+  <div class="container">
+    <div class="section-title" data-aos="fade-up">
+      <h2><?php echo escape(t('Our References','Nos Références')); ?></h2>
+      <p><?php echo escape(t('Organisations across Cameroon that trust Smartrack every day.',
+                             'Des organisations à travers le Cameroun qui font confiance à Smartrack chaque jour.')); ?></p>
+    </div>
+  </div>
+  <div class="logo-marquee on-grey" data-aos="fade-up" data-aos-delay="100">
+    <div class="logo-track reverse">
+      <?php for ($i = 0; $i < 2; $i++) { foreach ($references as $r) { $chip($r, 'references'); } } ?>
+    </div>
+  </div>
+</section>
 
 <!-- ══ § 7  WHY AFRICA ══════════════════════════════════════════════════════ -->
 <section class="section" style="background:#fff;">

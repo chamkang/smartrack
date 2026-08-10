@@ -78,6 +78,80 @@ document.querySelectorAll('.navmenu .toggle-dropdown').forEach(navmenu => {
   navmenu.parentNode.addEventListener('mouseleave', hideDropdown); // Leave to hide
 });
 
+/**
+ * Dropdown tapping rules
+ * ----------------------
+ * The whole parent label is tappable, not just the small chevron.
+ *
+ *  - Menus with no page of their own (href="#", e.g. SERVICES, the EN/FR
+ *    language switch) toggle their dropdown on click at ANY screen size.
+ *  - Menus that do have a page (ABOUT US -> about.php) navigate on desktop and
+ *    open the dropdown on mobile, where the first item ("Our Story") leads to
+ *    that same page.
+ */
+(function () {
+  var isMobileNav = function () {
+    // Prefer matchMedia; fall back to innerWidth. Guard against a 0/undefined
+    // width (some embedded webviews) wrongly reporting "mobile".
+    if (window.matchMedia) return window.matchMedia('(max-width: 1199px)').matches;
+    var w = window.innerWidth || document.documentElement.clientWidth || 1200;
+    return w < 1200;
+  };
+
+  function closeSiblings(link, submenu) {
+    var parentList = link.closest('ul');
+    if (!parentList) return;
+    parentList.querySelectorAll(':scope > li.dropdown > ul').forEach(function (other) {
+      if (other !== submenu) other.style.display = 'none';
+    });
+  }
+
+  document.querySelectorAll('.navmenu li.dropdown > a').forEach(function (link) {
+    link.addEventListener('click', function (e) {
+      var submenu = this.parentNode.querySelector('ul');
+      if (!submenu) return;
+
+      var href      = (this.getAttribute('href') || '').trim();
+      var hasPage   = href && href !== '#';
+      var isOpen    = submenu.style.display === 'block';
+
+      // Menus without their own page always toggle (language switch, Services)
+      if (!hasPage) {
+        e.preventDefault();
+        e.stopPropagation();
+        closeSiblings(this, submenu);
+        submenu.style.display = isOpen ? 'none' : 'block';
+        return;
+      }
+
+      // Menus with a real page: desktop navigates, mobile opens the dropdown
+      if (!isMobileNav()) return;
+      if (isOpen) return;                 // second tap follows the link
+      e.preventDefault();
+      e.stopPropagation();
+      closeSiblings(this, submenu);
+      submenu.style.display = 'block';
+    });
+  });
+
+  // Close open dropdowns when tapping elsewhere
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('.navmenu li.dropdown')) return;
+    document.querySelectorAll('.navmenu li.dropdown > ul').forEach(function (ul) {
+      ul.style.display = '';
+    });
+  });
+
+  // Reset inline display when resizing back to desktop so hover works again
+  window.addEventListener('resize', function () {
+    if (!isMobileNav()) {
+      document.querySelectorAll('.navmenu li.dropdown > ul').forEach(function (ul) {
+        ul.style.display = '';
+      });
+    }
+  });
+})();
+
  /*Close all dropdowns when clicking outside
 document.addEventListener('click', function(e) {
   if (!e.target.closest('.navmenu') && !e.target.closest('.toggle-dropdown')) {

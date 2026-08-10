@@ -1,7 +1,12 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = 'SmartSolution — Integrated Security Platform';
+$pageTitle = t('SmartSolution — Video Surveillance, Access Control & Fire Detection',
+               "SmartSolution — Vidéosurveillance, Contrôle d'Accès & Détection Incendie");
+$metaDescription = t(
+  'SmartSolution delivers video surveillance, biometric access control, fire detection, network security and time management for business premises across Cameroon.',
+  "SmartSolution offre vidéosurveillance, contrôle d'accès biométrique, détection incendie, sécurité réseau et gestion du temps pour les locaux professionnels au Cameroun."
+);
 $bodyClass = 'smartsolution-page';
 $lang      = current_language();
 

@@ -11,7 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'save'
     if (!verify_csrf($_POST['csrf_token'] ?? '')) {
         $error = 'Invalid security token.';
     } else {
-        $stmt = db()->prepare('INSERT OR REPLACE INTO translations (string_key, lang, value) VALUES (?,?,?)');
+        $stmt = db()->prepare(db_driver() === 'pgsql'
+    ? 'INSERT INTO translations (string_key, lang, value) VALUES (?,?,?)
+       ON CONFLICT (string_key, lang) DO UPDATE SET value = EXCLUDED.value'
+    : 'INSERT OR REPLACE INTO translations (string_key, lang, value) VALUES (?,?,?)');
         foreach ($_POST['en'] ?? [] as $key => $valEn) {
             $valFr = trim($_POST['fr'][$key] ?? '');
             $valEn = trim($valEn);
@@ -35,7 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'add')
         if ($newKey === '' || $newEn === '') {
             $error = 'Key and English value are required.';
         } else {
-            $stmt = db()->prepare('INSERT OR REPLACE INTO translations (string_key, lang, value) VALUES (?,?,?)');
+            $stmt = db()->prepare(db_driver() === 'pgsql'
+    ? 'INSERT INTO translations (string_key, lang, value) VALUES (?,?,?)
+       ON CONFLICT (string_key, lang) DO UPDATE SET value = EXCLUDED.value'
+    : 'INSERT OR REPLACE INTO translations (string_key, lang, value) VALUES (?,?,?)');
             $stmt->execute([$newKey, 'en', $newEn]);
             $stmt->execute([$newKey, 'fr', $newFr]);
             $added = true;

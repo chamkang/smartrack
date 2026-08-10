@@ -2,7 +2,11 @@
 require_once __DIR__ . '/includes/functions.php';
 init_session();
 
-$pageTitle = t('Career - Smartrack', 'Carrières - Smartrack');
+$pageTitle = t('Careers — Join Smartrack Africa','Carrières — Rejoignez Smartrack Africa');
+$metaDescription = t(
+  'Join the Smartrack Africa team in Douala, Cameroon. Explore open roles in engineering, field operations, sales and customer support, or send a general application.',
+  "Rejoignez l'équipe Smartrack Africa à Douala, Cameroun. Découvrez nos postes ouverts en ingénierie, opérations terrain, ventes et support client, ou envoyez une candidature spontanée."
+);
 $bodyClass = 'services-page';
 $lang      = current_language();
 
