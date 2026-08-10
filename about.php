@@ -622,11 +622,14 @@ include __DIR__ . '/includes/header.php';
 .logo-chip .logo-word.branded { transition:transform .3s, filter .3s; }
 .logo-chip:hover .logo-word.branded { color:inherit; filter:brightness(1.08); }
 .logo-word.brand-topten {
-  color:#E8800C; font-weight:900; font-size:1.75rem; letter-spacing:-.02em;
+  font-weight:900; font-size:1.95rem; letter-spacing:-.02em; white-space:nowrap;
   font-family:"Arial Black","Helvetica Neue",Arial,sans-serif;
 }
-.logo-word.brand-topten sup { font-size:.42em; font-weight:700; vertical-align:super; margin-left:2px; }
-@media(max-width:767px){ .logo-word.brand-topten { font-size:1.45rem; } }
+.logo-word.brand-topten .tt-a { color:#E8800C; }   /* TOP — brand orange */
+.logo-word.brand-topten .tt-b { color:#909C9C; }   /* TEN — brand grey   */
+.logo-word.brand-topten sup { font-size:.38em; font-weight:700; color:#909C9C;
+                              vertical-align:super; margin-left:2px; }
+@media(max-width:767px){ .logo-word.brand-topten { font-size:1.6rem; } }
 @media(max-width:767px){
   .logo-chip { height:110px; min-width:175px; padding:10px 20px; }
   .logo-chip img { max-height:76px; max-width:170px; }
@@ -677,13 +680,16 @@ $references = [
 $lightLogos = [];
 
 /* Unusually wide, short logos — allow more width so they don't read as a sliver */
-$wideLogos = ['skymotors', 'scb', 'tractafric_equipment', 'tyco'];
+$wideLogos = ['skymotors', 'scb', 'tractafric_equipment', 'tyco', 'sgc', 'tractafric', 'addax'];
 
 /* Companies with no usable logo file but a known brand look. Rendered as a
    styled wordmark instead of plain grey text. The Top Ten mark is orange
    (#E8800C, sampled from their product artwork) in a heavy sans. */
 $brandedWords = [
-    'topten' => ['class' => 'brand-topten', 'html' => 'TOPTEN<sup>&reg;</sup>'],
+    // Two-tone: "TOP" orange (#E8800C), "TEN" grey (#909C9C) — both sampled
+    // from the supplied product artwork.
+    'topten' => ['class' => 'brand-topten',
+                 'html'  => '<span class="tt-a">TOP</span><span class="tt-b">TEN</span><sup>&reg;</sup>'],
 ];
 
 // Render one chip (logo image when available, styled wordmark otherwise)
