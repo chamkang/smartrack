@@ -593,23 +593,36 @@ include __DIR__ . '/includes/header.php';
 
 /* Borderless: logos sit directly on the page for a cleaner, modern logo wall */
 .logo-chip {
-  flex:0 0 auto; height:88px; min-width:170px; padding:10px 22px;
+  flex:0 0 auto; height:132px; min-width:240px; padding:12px 20px;
   display:flex; align-items:center; justify-content:center;
   transition:transform .3s;
 }
 .logo-chip:hover { transform:translateY(-3px); }
-/* Logos keep their real brand colours */
-.logo-chip img { max-height:52px; max-width:150px; width:auto; object-fit:contain;
+/* Logos keep their real brand colours.
+   max-height drives square logos (ABN, Addax, Tractafric Motors, Belife) and
+   max-width drives wide ones, so both end up with similar visual weight. */
+.logo-chip img { max-height:92px; max-width:215px; width:auto; object-fit:contain;
                  opacity:.95; transition:all .3s; }
-.logo-chip:hover img { opacity:1; transform:scale(1.04); }
+.logo-chip:hover img { opacity:1; transform:scale(1.05); }
+/* Very wide, short logos need extra width or they read as a thin sliver */
+.logo-chip img.is-wide { max-width:250px; max-height:70px; }
+/* SVGs scale losslessly, so let them fill the slot instead of sitting at their
+   intrinsic size (which can be tiny). Raster logos stay capped to avoid blur. */
+.logo-chip img[src$=".svg"]         { width:100%; height:auto; max-height:92px; }
+.logo-chip img.is-wide[src$=".svg"] { max-height:70px; }
 /* White-on-transparent logos would be invisible here — render them dark instead */
 .logo-chip img.is-light { filter:brightness(0); opacity:.7; }
 .logo-chip:hover img.is-light { filter:brightness(0); opacity:.95; }
 /* Text fallback shown until a real logo file is added */
-.logo-chip .logo-word { font-weight:800; font-size:1rem; letter-spacing:.02em; color:#8a8f98;
+.logo-chip .logo-word { font-weight:800; font-size:1.05rem; letter-spacing:.02em; color:#8a8f98;
                         text-align:center; line-height:1.25; text-transform:uppercase; transition:color .3s; }
 .logo-chip:hover .logo-word { color:#e60000; }
-@media(max-width:575px){ .logo-chip{ height:74px; min-width:140px; padding:8px 16px; } }
+@media(max-width:767px){
+  .logo-chip { height:110px; min-width:175px; padding:10px 20px; }
+  .logo-chip img { max-height:76px; max-width:170px; }
+  .logo-chip img.is-wide { max-width:190px; max-height:58px; }
+  .logo-chip .logo-word { font-size:.95rem; }
+}
 </style>
 
 <?php
@@ -653,13 +666,19 @@ $references = [
    Empty now that every logo we hold is a full-colour, light-background version. */
 $lightLogos = [];
 
+/* Unusually wide, short logos — allow more width so they don't read as a sliver */
+$wideLogos = ['skymotors', 'scb', 'tractafric_equipment', 'tyco'];
+
 // Render one chip (logo image when available, styled wordmark otherwise)
-$chip = function (array $item, string $folder) use ($findLogo, $lightLogos) {
+$chip = function (array $item, string $folder) use ($findLogo, $lightLogos, $wideLogos) {
     [$file, $label] = $item;
     $src = $findLogo($folder, $file);
     echo '<div class="logo-chip">';
     if ($src) {
-        $cls = in_array($file, $lightLogos, true) ? ' class="is-light"' : '';
+        $classes = [];
+        if (in_array($file, $lightLogos, true)) { $classes[] = 'is-light'; }
+        if (in_array($file, $wideLogos,  true)) { $classes[] = 'is-wide';  }
+        $cls = $classes ? ' class="' . implode(' ', $classes) . '"' : '';
         echo '<img' . $cls . ' src="' . escape($src) . '" alt="' . escape($label) . '" loading="lazy">';
     } else {
         echo '<span class="logo-word">' . escape($label) . '</span>';
@@ -683,7 +702,7 @@ $chip = function (array $item, string $folder) use ($findLogo, $lightLogos) {
       /* One "lap" must be wider than the widest screen or the loop shows a gap.
          Chips are ~195px, so repeat until a lap is comfortably past 1600px,
          then render that lap twice (the animation scrolls exactly -50%). */
-      $lap = max(2, (int)ceil(1600 / (max(1, count($partners)) * 195)));
+      $lap = max(2, (int)ceil(2400 / (max(1, count($partners)) * 260)));
       for ($i = 0; $i < $lap * 2; $i++) { foreach ($partners as $p) { $chip($p, 'partners'); } }
       ?>
     </div>
@@ -702,7 +721,7 @@ $chip = function (array $item, string $folder) use ($findLogo, $lightLogos) {
   <div class="logo-marquee on-grey" data-aos="fade-up" data-aos-delay="100">
     <div class="logo-track reverse">
       <?php
-      $lapR = max(2, (int)ceil(1600 / (max(1, count($references)) * 195)));
+      $lapR = max(2, (int)ceil(2400 / (max(1, count($references)) * 260)));
       for ($i = 0; $i < $lapR * 2; $i++) { foreach ($references as $r) { $chip($r, 'references'); } }
       ?>
     </div>
