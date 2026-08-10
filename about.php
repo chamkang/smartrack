@@ -2,11 +2,11 @@
 require_once __DIR__ . '/includes/functions.php';
 init_session();
 
-$pageTitle = t('About Us — Smartrack Africa | GPS Tracking Since 2006',
-               'À Propos — Smartrack Africa | Suivi GPS Depuis 2006');
+$pageTitle = t('About Us — Smartrack Africa | GPS Tracking Since 2007',
+               'À Propos — Smartrack Africa | Suivi GPS Depuis 2007');
 $metaDescription = t(
-  'Founded in Douala in 2006, Smartrack Africa builds GPS tracking and security technology for African conditions. Trusted by SCB, BICEC, CFAO, Tractafric Motors and more across Cameroon.',
-  "Fondée à Douala en 2006, Smartrack Africa conçoit des technologies GPS et de sécurité adaptées aux conditions africaines. La confiance de SCB, BICEC, CFAO, Tractafric Motors et bien d'autres au Cameroun."
+  'Founded in Douala in 2007, Smartrack Africa builds GPS tracking and security technology for African conditions. Trusted by SCB, BICEC, CFAO, Tractafric Motors and more across Cameroon.',
+  "Fondée à Douala en 2007, Smartrack Africa conçoit des technologies GPS et de sécurité adaptées aux conditions africaines. La confiance de SCB, BICEC, CFAO, Tractafric Motors et bien d'autres au Cameroun."
 );
 $bodyClass = 'about-page';
 $lang      = current_language();
@@ -21,7 +21,7 @@ include __DIR__ . '/includes/header.php';
   <div class="container position-relative">
     <div class="abt-hero-eyebrow">
       <span class="dot"></span>
-      <?php echo escape(t('Since 2006 · Douala, Cameroon','Depuis 2006 · Douala, Cameroun')); ?>
+      <?php echo escape(t('Since 2007 · Douala, Cameroon','Depuis 2007 · Douala, Cameroun')); ?>
     </div>
     <h1 class="abt-hero-title">
       <?php echo t("Built for Africa.<br><span class='hl'>Trusted across it.</span>",
@@ -135,8 +135,11 @@ include __DIR__ . '/includes/header.php';
   font-size:.72rem;font-weight:800;color:#e60000;
   text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px;
 }
-.abt-timeline-item h5 { font-size:.95rem;font-weight:700;color:#1a202c;margin-bottom:4px; }
-.abt-timeline-item p  { font-size:.855rem;color:#64748b;line-height:1.6;margin:0; }
+/* Timeline sits on the dark "Our Journey" band — keep text light so it reads */
+.abt-timeline-item h5 { font-size:1rem;font-weight:700;color:#fff;margin-bottom:5px; }
+.abt-timeline-item p  { font-size:.875rem;color:rgba(255,255,255,.68);line-height:1.7;margin:0; }
+.abt-timeline-year    { color:#ff5a5a; }
+.abt-timeline-dot     { border-color:#0a0a0a !important; }
 
 /* ── Founder ── */
 .abt-founder-photo {
@@ -234,7 +237,7 @@ include __DIR__ . '/includes/header.php';
           <img src="<?php echo escape(site_url('assets/img/implantation-SMARTRACK-AFRICA-1.png')); ?>"
                alt="Smartrack Africa">
           <div class="abt-badge">
-            <span>2006</span>
+            <span>2007</span>
             <p><?php echo escape(get_translation('about_founded')); ?></p>
           </div>
         </div>
@@ -286,24 +289,24 @@ include __DIR__ . '/includes/header.php';
   <div class="container">
     <div class="row g-4">
       <?php
+      // [value, label, icon, colour, suffix]
       $abtStats = [
-        ['232', 'Clients Served',     'bi-emoji-smile-fill',    '#e60000'],
-        ['521', 'Projects Delivered', 'bi-journal-check',       '#3b82f6'],
-        ['1463','Support Hours',      'bi-headset',             '#22c55e'],
-        ['19',  'Team Members',       'bi-people-fill',         '#f59e0b'],
+        ['232', t('Clients Served','Clients Servis'),         'bi-emoji-smile-fill', '#e60000', ''],
+        ['521', t('Projects Delivered','Projets Réalisés'),   'bi-journal-check',    '#3b82f6', ''],
+        ['1463',t('Support Hours','Heures de Support'),       'bi-headset',          '#22c55e', ''],
+        ['50',  t('Team Members','Membres de l\'Équipe'),     'bi-people-fill',      '#f59e0b', '+'],
       ];
-      foreach ($abtStats as $i => [$val,$lbl,$icon,$col]):
+      foreach ($abtStats as $i => [$val,$lbl,$icon,$col,$suffix]):
       ?>
         <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="<?php echo $i*80; ?>">
           <div class="abt-stat-card" style="border-bottom-color:<?php echo $col; ?>;">
             <i class="bi <?php echo $icon; ?>" style="font-size:2rem;color:<?php echo $col; ?>;
                margin-bottom:12px;display:block;"></i>
-            <span class="abt-stat-val purecounter"
-                  style="color:<?php echo $col; ?>;"
+            <span class="abt-stat-val" style="color:<?php echo $col; ?>;"><span class="purecounter"
                   data-purecounter-start="0"
                   data-purecounter-end="<?php echo $val; ?>"
-                  data-purecounter-duration="1"><?php echo $val; ?></span>
-            <div class="abt-stat-lbl"><?php echo $lbl; ?></div>
+                  data-purecounter-duration="1"><?php echo $val; ?></span><?php echo $suffix; ?></span>
+            <div class="abt-stat-lbl"><?php echo escape($lbl); ?></div>
           </div>
         </div>
       <?php endforeach; ?>
@@ -467,7 +470,7 @@ include __DIR__ . '/includes/header.php';
         <div class="abt-timeline">
           <?php
           $milestones = [
-            ['2006',
+            ['2007',
               t('Company Founded',          'Fondation de l\'Entreprise'),
               t('Smartrack Africa was incorporated in Douala with a founding team of 3 engineers and a mission to bring reliable fleet tracking to Cameroon.',
                 "Smartrack Africa a été créée à Douala avec une équipe fondatrice de 3 ingénieurs et la mission d'apporter un suivi de flotte fiable au Cameroun.")],
