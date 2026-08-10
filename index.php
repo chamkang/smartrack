@@ -534,22 +534,21 @@ include __DIR__ . '/includes/header.php';
     </script>
     <div class="swiper-wrapper">
       <?php foreach ($promoSlides as $slide): $th = $slide['theme']; ?>
-      <div class="swiper-slide" style="display:flex;align-items:stretch;">
-        <div style="width:50%;height:100%;overflow:hidden;position:relative;background:#1a1a1a;">
-          <img src="<?php echo escape($slide['image']); ?>" alt="<?php echo escape($th['alt']); ?>"
-               style="width:100%;height:100%;object-fit:cover;object-position:center;animation:img-zoom 8s ease-out infinite;">
+      <div class="swiper-slide promo-slide">
+        <div class="promo-media">
+          <img src="<?php echo escape($slide['image']); ?>" alt="<?php echo escape($th['alt']); ?>">
         </div>
-        <div style="width:50%;height:100%;background:linear-gradient(135deg,<?php echo $th['grad1']; ?> 0%,<?php echo $th['grad2']; ?> 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px;color:#fff;text-align:center;position:relative;overflow:hidden;">
-          <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:rgba(255,255,255,.06);border-radius:50%;animation:float 6s ease-in-out infinite;"></div>
-          <div style="position:relative;z-index:1;">
-            <div style="font-size:.85rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:12px;"><?php echo escape($slide['eyebrow']); ?></div>
-            <h2 style="font-size:clamp(2.4rem,4vw,3.4rem);font-weight:900;margin:0 0 16px;line-height:1.05;text-shadow:0 4px 12px rgba(0,0,0,.2);"><?php echo $slide['title']; ?></h2>
-            <p style="font-size:1.05rem;margin:0 0 24px;line-height:1.6;color:rgba(255,255,255,.9);"><?php echo $slide['subtitle']; ?></p>
-            <a href="<?php echo escape($slide['link']); ?>" style="display:inline-flex;align-items:center;gap:10px;background:#fff;color:<?php echo $th['btn']; ?>;font-weight:800;font-size:1rem;padding:15px 38px;border-radius:50px;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.25);transition:all .3s;cursor:pointer;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 36px rgba(0,0,0,.35)'" onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.25)'">
+        <div class="promo-body" style="background:linear-gradient(135deg,<?php echo $th['grad1']; ?> 0%,<?php echo $th['grad2']; ?> 100%);">
+          <div class="promo-blob"></div>
+          <div class="promo-content">
+            <div class="promo-eyebrow"><?php echo escape($slide['eyebrow']); ?></div>
+            <h2 class="promo-title"><?php echo $slide['title']; ?></h2>
+            <p class="promo-sub"><?php echo $slide['subtitle']; ?></p>
+            <a href="<?php echo escape($slide['link']); ?>" class="promo-btn" style="color:<?php echo $th['btn']; ?>;">
               <i class="bi <?php echo escape($th['icon']); ?>"></i> <?php echo escape($slide['btn']); ?>
             </a>
             <?php if (trim($slide['note']) !== ''): ?>
-              <p style="font-size:.8rem;color:rgba(255,255,255,.6);margin-top:14px;"><?php echo escape($slide['note']); ?></p>
+              <p class="promo-note"><?php echo escape($slide['note']); ?></p>
             <?php endif; ?>
           </div>
         </div>
@@ -565,6 +564,59 @@ include __DIR__ . '/includes/header.php';
   <style>
     @keyframes img-zoom { from{transform:scale(1)} to{transform:scale(1.05)} }
     @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(20px)} }
+
+    /* ── Promo carousel ── */
+    .promo-slide { display:flex; align-items:stretch; }
+    .promo-media { width:50%; height:100%; overflow:hidden; position:relative; background:#1a1a1a; }
+    .promo-media img { width:100%; height:100%; object-fit:cover; object-position:center;
+                       animation:img-zoom 8s ease-out infinite; }
+    .promo-body { width:50%; height:100%; display:flex; flex-direction:column;
+                  align-items:center; justify-content:center; padding:40px;
+                  color:#fff; text-align:center; position:relative; overflow:hidden; }
+    .promo-blob { position:absolute; top:-50px; right:-50px; width:200px; height:200px;
+                  background:rgba(255,255,255,.06); border-radius:50%;
+                  animation:float 6s ease-in-out infinite; }
+    .promo-content { position:relative; z-index:1; width:100%; }
+    .promo-eyebrow { font-size:.85rem; font-weight:700; letter-spacing:.08em;
+                     text-transform:uppercase; color:rgba(255,255,255,.8); margin-bottom:12px; }
+    .promo-title { font-size:clamp(2.2rem,4vw,3.4rem); font-weight:900; margin:0 0 16px;
+                   line-height:1.05; text-shadow:0 4px 12px rgba(0,0,0,.2); }
+    .promo-sub { font-size:1.05rem; margin:0 0 24px; line-height:1.6; color:rgba(255,255,255,.9); }
+    .promo-btn { display:inline-flex; align-items:center; gap:10px; background:#fff;
+                 font-weight:800; font-size:1rem; padding:15px 38px; border-radius:50px;
+                 text-decoration:none; box-shadow:0 8px 24px rgba(0,0,0,.25);
+                 transition:transform .3s, box-shadow .3s; }
+    .promo-btn:hover { transform:translateY(-3px); box-shadow:0 12px 36px rgba(0,0,0,.35); }
+    .promo-note { font-size:.8rem; color:rgba(255,255,255,.6); margin-top:14px; }
+
+    /* Tablet — tighten the split */
+    @media (max-width:991px) {
+      .promo-body { padding:28px 22px; }
+      .promo-sub  { font-size:.95rem; margin-bottom:18px; }
+      .promo-btn  { padding:13px 28px; font-size:.92rem; }
+    }
+
+    /* Mobile — stack: image on top, copy below (a 50% column is far too narrow) */
+    @media (max-width:767px) {
+      .idx-promo-banner .swiper { height:auto !important; }
+      .promo-slide  { flex-direction:column; height:auto; }
+      .promo-media  { width:100%; height:190px; flex:0 0 190px; }
+      .promo-body   { width:100%; height:auto; padding:30px 20px 34px; }
+      .promo-blob   { width:130px; height:130px; top:-35px; right:-35px; }
+      .promo-eyebrow{ font-size:.72rem; margin-bottom:9px; }
+      .promo-title  { font-size:clamp(1.9rem,9vw,2.6rem); margin-bottom:12px; }
+      .promo-sub    { font-size:.92rem; margin-bottom:20px; }
+      .promo-btn    { padding:13px 30px; font-size:.92rem; }
+      .promo-note   { font-size:.74rem; margin-top:12px; }
+      /* Side arrows crowd a narrow screen — dots are enough */
+      .idx-promo-banner .swiper-button-prev,
+      .idx-promo-banner .swiper-button-next { display:none; }
+      .idx-promo-banner .swiper-pagination { position:static; margin:14px 0 4px; }
+    }
+    @media (max-width:400px) {
+      .promo-media { height:160px; flex:0 0 160px; }
+      .promo-body  { padding:26px 16px 30px; }
+    }
   </style>
 </section>
 <?php endif; ?>

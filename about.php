@@ -633,18 +633,18 @@ $partners = [
     ['orange',     'Orange'],
     ['tyco',       'TYCO'],
     ['topten',     'Top Ten'],
+    ['cfao',       'CFAO'],
+    ['skymotors',  'Sky Motors'],
+    ['tractafric', 'Tractafric Motors'],
+    ['abn',        'ABN Motors'],
+    ['longstar',   'Longstar Equipments'],
+    ['belife',     'Belife Insurance'],
 ];
 $references = [
-    ['scb',              'SCB'],
-    ['bicec',            'BICEC'],
-    ['sgc',              'SGC'],
-    ['abn',              'ABN'],
-    ['belife',           'Belife Insurance'],
-    ['tractafric',       'Tractafric Motors'],
-    ['longstar',         'Longstar Equipments'],
-    ['skymotors',        'Sky Motors'],
-    ['cfao',             'CFAO'],
-    ['addax',            'Addax Petroleum'],
+    ['scb',        'SCB'],
+    ['bicec',      'BICEC'],
+    ['sgc',        'SGC'],
+    ['addax',      'Addax Petroleum'],
 ];
 
 /* Logos supplied only as a white/light version (made for dark backgrounds).
@@ -677,8 +677,13 @@ $chip = function (array $item, string $folder) use ($findLogo, $lightLogos) {
   </div>
   <div class="logo-marquee on-light" data-aos="fade-up" data-aos-delay="100">
     <div class="logo-track">
-      <?php /* rendered twice so the loop is seamless */
-      for ($i = 0; $i < 2; $i++) { foreach ($partners as $p) { $chip($p, 'partners'); } } ?>
+      <?php
+      /* One "lap" must be wider than the widest screen or the loop shows a gap.
+         Chips are ~195px, so repeat until a lap is comfortably past 1600px,
+         then render that lap twice (the animation scrolls exactly -50%). */
+      $lap = max(2, (int)ceil(1600 / (max(1, count($partners)) * 195)));
+      for ($i = 0; $i < $lap * 2; $i++) { foreach ($partners as $p) { $chip($p, 'partners'); } }
+      ?>
     </div>
   </div>
 </section>
@@ -694,7 +699,10 @@ $chip = function (array $item, string $folder) use ($findLogo, $lightLogos) {
   </div>
   <div class="logo-marquee on-grey" data-aos="fade-up" data-aos-delay="100">
     <div class="logo-track reverse">
-      <?php for ($i = 0; $i < 2; $i++) { foreach ($references as $r) { $chip($r, 'references'); } } ?>
+      <?php
+      $lapR = max(2, (int)ceil(1600 / (max(1, count($references)) * 195)));
+      for ($i = 0; $i < $lapR * 2; $i++) { foreach ($references as $r) { $chip($r, 'references'); } }
+      ?>
     </div>
   </div>
 </section>
