@@ -633,17 +633,18 @@ $partners = [
     ['orange',     'Orange'],
     ['tyco',       'TYCO'],
     ['topten',     'Top Ten'],
-    ['cfao',       'CFAO'],
-    ['skymotors',  'Sky Motors'],
-    ['tractafric', 'Tractafric Motors'],
-    ['abn',        'ABN Motors'],
-    ['longstar',   'Longstar Equipments'],
-    ['belife',     'Belife Insurance'],
+    ['cfao',                 'CFAO'],
+    ['skymotors',            'Sky Motors'],
+    ['tractafric_equipment', 'Tractafric Equipment'],
+    ['abn',                  'ABN Motors'],
+    ['longstar',             'Longstar Equipments'],
+    ['belife',               'Belife Insurance'],
 ];
 $references = [
     ['scb',        'SCB'],
     ['bicec',      'BICEC'],
     ['sgc',        'SGC'],
+    ['tractafric', 'Tractafric Motors'],
     ['addax',      'Addax Petroleum'],
 ];
 
