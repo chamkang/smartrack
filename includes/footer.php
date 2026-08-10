@@ -75,7 +75,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span><?php echo t('Copyright','Copyright'); ?></span> <strong class="px-1 sitename">Smartrack</strong> <span><?php echo escape(get_translation('footer_copyright')); ?></span></p>
+      <p>© <span><?php echo t('Copyright','Copyright'); ?></span> <strong class="px-1 sitename">Smartrack Africa</strong> <span><?php echo escape(get_translation('footer_copyright')); ?></span></p>
     </div>
   </footer>
 

@@ -649,8 +649,9 @@ $references = [
 ];
 
 /* Logos supplied only as a white/light version (made for dark backgrounds).
-   They'd be invisible on this light section, so they're rendered dark instead. */
-$lightLogos = ['tractafric'];
+   They'd be invisible on this light section, so they're rendered dark instead.
+   Empty now that every logo we hold is a full-colour, light-background version. */
+$lightLogos = [];
 
 // Render one chip (logo image when available, styled wordmark otherwise)
 $chip = function (array $item, string $folder) use ($findLogo, $lightLogos) {
