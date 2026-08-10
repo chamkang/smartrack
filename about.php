@@ -617,6 +617,16 @@ include __DIR__ . '/includes/header.php';
 .logo-chip .logo-word { font-weight:800; font-size:1.05rem; letter-spacing:.02em; color:#8a8f98;
                         text-align:center; line-height:1.25; text-transform:uppercase; transition:color .3s; }
 .logo-chip:hover .logo-word { color:#e60000; }
+/* Wordmarks rendered in the company's own brand colour/type when we know it
+   but have no usable logo file (measured from supplied artwork). */
+.logo-chip .logo-word.branded { transition:transform .3s, filter .3s; }
+.logo-chip:hover .logo-word.branded { color:inherit; filter:brightness(1.08); }
+.logo-word.brand-topten {
+  color:#E8800C; font-weight:900; font-size:1.75rem; letter-spacing:-.02em;
+  font-family:"Arial Black","Helvetica Neue",Arial,sans-serif;
+}
+.logo-word.brand-topten sup { font-size:.42em; font-weight:700; vertical-align:super; margin-left:2px; }
+@media(max-width:767px){ .logo-word.brand-topten { font-size:1.45rem; } }
 @media(max-width:767px){
   .logo-chip { height:110px; min-width:175px; padding:10px 20px; }
   .logo-chip img { max-height:76px; max-width:170px; }
@@ -669,8 +679,15 @@ $lightLogos = [];
 /* Unusually wide, short logos — allow more width so they don't read as a sliver */
 $wideLogos = ['skymotors', 'scb', 'tractafric_equipment', 'tyco'];
 
+/* Companies with no usable logo file but a known brand look. Rendered as a
+   styled wordmark instead of plain grey text. The Top Ten mark is orange
+   (#E8800C, sampled from their product artwork) in a heavy sans. */
+$brandedWords = [
+    'topten' => ['class' => 'brand-topten', 'html' => 'TOPTEN<sup>&reg;</sup>'],
+];
+
 // Render one chip (logo image when available, styled wordmark otherwise)
-$chip = function (array $item, string $folder) use ($findLogo, $lightLogos, $wideLogos) {
+$chip = function (array $item, string $folder) use ($findLogo, $lightLogos, $wideLogos, $brandedWords) {
     [$file, $label] = $item;
     $src = $findLogo($folder, $file);
     echo '<div class="logo-chip">';
@@ -680,6 +697,10 @@ $chip = function (array $item, string $folder) use ($findLogo, $lightLogos, $wid
         if (in_array($file, $wideLogos,  true)) { $classes[] = 'is-wide';  }
         $cls = $classes ? ' class="' . implode(' ', $classes) . '"' : '';
         echo '<img' . $cls . ' src="' . escape($src) . '" alt="' . escape($label) . '" loading="lazy">';
+    } elseif (isset($brandedWords[$file])) {
+        $b = $brandedWords[$file];
+        echo '<span class="logo-word branded ' . escape($b['class']) . '" title="' . escape($label) . '">'
+           . $b['html'] . '</span>';
     } else {
         echo '<span class="logo-word">' . escape($label) . '</span>';
     }
