@@ -535,7 +535,7 @@ include __DIR__ . '/includes/header.php';
     <div class="swiper-wrapper">
       <?php foreach ($promoSlides as $slide): $th = $slide['theme']; ?>
       <div class="swiper-slide promo-slide">
-        <div class="promo-media">
+        <div class="promo-media" style="--promo-img:url('<?php echo escape($slide['image']); ?>');">
           <img src="<?php echo escape($slide['image']); ?>" alt="<?php echo escape($th['alt']); ?>">
         </div>
         <div class="promo-body" style="background:linear-gradient(135deg,<?php echo $th['grad1']; ?> 0%,<?php echo $th['grad2']; ?> 100%);">
@@ -567,9 +567,17 @@ include __DIR__ . '/includes/header.php';
 
     /* ── Promo carousel ── */
     .promo-slide { display:flex; align-items:stretch; }
+    /* The promo photos are portrait (≈2:3) while this box is landscape, so
+       object-fit:cover was cutting off nearly half the image. Show the whole
+       photo instead, over a blurred copy of itself so the sides aren't bare. */
     .promo-media { width:50%; height:100%; overflow:hidden; position:relative; background:#1a1a1a; }
-    .promo-media img { width:100%; height:100%; object-fit:cover; object-position:center;
-                       animation:img-zoom 8s ease-out infinite; }
+    .promo-media::before {
+      content:''; position:absolute; inset:0;
+      background-image:var(--promo-img); background-size:cover; background-position:center;
+      filter:blur(26px) brightness(.45); transform:scale(1.15);
+    }
+    .promo-media img { position:relative; z-index:1;
+                       width:100%; height:100%; object-fit:contain; object-position:center; }
     .promo-body { width:50%; height:100%; display:flex; flex-direction:column;
                   align-items:center; justify-content:center; padding:40px;
                   color:#fff; text-align:center; position:relative; overflow:hidden; }
@@ -602,7 +610,11 @@ include __DIR__ . '/includes/header.php';
     @media (max-width:767px) {
       .idx-promo-banner .swiper { height:auto !important; }
       .promo-slide  { flex-direction:column; height:auto; }
-      .promo-media  { width:100%; height:190px; flex:0 0 190px; }
+      /* Short, wide box on mobile — "contain" would shrink the portrait photo
+         to a sliver, so crop it banner-style and drop the blurred backdrop. */
+      .promo-media  { width:100%; height:210px; flex:0 0 210px; }
+      .promo-media::before { display:none; }
+      .promo-media img { object-fit:cover; object-position:center 42%; }
       .promo-body   { width:100%; height:auto; padding:30px 20px 34px; }
       .promo-blob   { width:130px; height:130px; top:-35px; right:-35px; }
       .promo-eyebrow{ font-size:.72rem; margin-bottom:9px; }
@@ -616,7 +628,7 @@ include __DIR__ . '/includes/header.php';
       .idx-promo-banner .swiper-pagination { position:static; margin:14px 0 4px; }
     }
     @media (max-width:400px) {
-      .promo-media { height:160px; flex:0 0 160px; }
+      .promo-media { height:180px; flex:0 0 180px; }
       .promo-body  { padding:26px 16px 30px; }
     }
   </style>
