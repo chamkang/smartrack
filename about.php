@@ -605,7 +605,9 @@ include __DIR__ . '/includes/header.php';
                  opacity:.95; transition:all .3s; }
 .logo-chip:hover img { opacity:1; transform:scale(1.05); }
 /* Very wide, short logos need extra width or they read as a thin sliver */
-.logo-chip img.is-wide { max-width:250px; max-height:70px; }
+.logo-chip img.is-wide  { max-width:250px; max-height:70px; }
+.logo-chip img.is-xwide { max-width:290px; max-height:48px; }
+.logo-chip:has(img.is-xwide) { min-width:320px; }
 /* SVGs scale losslessly, so let them fill the slot instead of sitting at their
    intrinsic size (which can be tiny). Raster logos stay capped to avoid blur. */
 .logo-chip img[src$=".svg"]         { width:100%; height:auto; max-height:92px; }
@@ -668,10 +670,22 @@ $partners = [
     ['tractafric',           'Tractafric Motors'],
 ];
 $references = [
-    ['scb',        'SCB'],
-    ['bicec',      'BICEC'],
-    ['sgc',        'SGC'],
-    ['addax',      'Addax Petroleum'],
+    ['scb',            'SCB'],
+    ['bicec',          'BICEC'],
+    ['sgc',            'SGC'],
+    ['addax',          'Addax Petroleum'],
+    ['banquemondiale', 'Banque Mondiale'],
+    ['bgfibank',       'BGFIBank'],
+    ['fao',            'FAO'],
+    ['crtv',           'CRTV'],
+    ['halliburton',    'Halliburton'],
+    ['sgs',            'SGS'],
+    ['hysacam',        'Hysacam'],
+    ['medlog',         'MEDLOG'],
+    ['delta',          'Delta Transport'],
+    ['sourcedupays',   'Source du Pays'],
+    ['telcar',         'Telcar Cocoa'],
+    ['miraco',         'Mira-Co'],
 ];
 
 /* Logos supplied only as a white/light version (made for dark backgrounds).
@@ -680,7 +694,12 @@ $references = [
 $lightLogos = [];
 
 /* Unusually wide, short logos — allow more width so they don't read as a sliver */
-$wideLogos = ['skymotors', 'scb', 'tractafric_equipment', 'tyco', 'sgc', 'tractafric', 'addax'];
+$wideLogos = ['skymotors', 'scb', 'tractafric_equipment', 'tyco', 'sgc', 'tractafric', 'addax',
+              'delta', 'fao'];
+
+/* Extremely wide wordmarks (ratio > 8) — a normal cap renders them as a thin
+   sliver, so give them the full chip width. */
+$xWideLogos = ['halliburton'];
 
 /* Companies with no usable logo file but a known brand look. Rendered as a
    styled wordmark instead of plain grey text. The Top Ten mark is orange
@@ -693,7 +712,7 @@ $brandedWords = [
 ];
 
 // Render one chip (logo image when available, styled wordmark otherwise)
-$chip = function (array $item, string $folder) use ($findLogo, $lightLogos, $wideLogos, $brandedWords) {
+$chip = function (array $item, string $folder) use ($findLogo, $lightLogos, $wideLogos, $xWideLogos, $brandedWords) {
     [$file, $label] = $item;
     $src = $findLogo($folder, $file);
     echo '<div class="logo-chip">';
@@ -701,6 +720,7 @@ $chip = function (array $item, string $folder) use ($findLogo, $lightLogos, $wid
         $classes = [];
         if (in_array($file, $lightLogos, true)) { $classes[] = 'is-light'; }
         if (in_array($file, $wideLogos,  true)) { $classes[] = 'is-wide';  }
+        if (in_array($file, $xWideLogos, true)) { $classes[] = 'is-xwide'; }
         $cls = $classes ? ' class="' . implode(' ', $classes) . '"' : '';
         echo '<img' . $cls . ' src="' . escape($src) . '" alt="' . escape($label) . '" loading="lazy">';
     } elseif (isset($brandedWords[$file])) {
