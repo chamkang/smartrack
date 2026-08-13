@@ -579,7 +579,9 @@ include __DIR__ . '/includes/header.php';
     .promo-content { position:relative; z-index:1; width:100%; }
     .promo-eyebrow { font-size:.85rem; font-weight:700; letter-spacing:.08em;
                      text-transform:uppercase; color:rgba(255,255,255,.8); margin-bottom:12px; }
-    .promo-title { font-size:clamp(2.2rem,4vw,3.4rem); font-weight:900; margin:0 0 16px;
+    /* colour must be explicit: the global "h2 { color: var(--heading-color) }"
+       rule beats the white inherited from .promo-body and turns this grey */
+    .promo-title { color:#fff; font-size:clamp(2.2rem,4vw,3.4rem); font-weight:900; margin:0 0 16px;
                    line-height:1.05; text-shadow:0 4px 12px rgba(0,0,0,.2); }
     .promo-sub { font-size:1.05rem; margin:0 0 24px; line-height:1.6; color:rgba(255,255,255,.9); }
     .promo-btn { display:inline-flex; align-items:center; gap:10px; background:#fff;
