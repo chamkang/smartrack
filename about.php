@@ -665,12 +665,12 @@ $partners = [
     ['abn',                  'ABN Motors'],
     ['longstar',             'Longstar Equipments'],
     ['belife',               'Belife Insurance'],
+    ['tractafric',           'Tractafric Motors'],
 ];
 $references = [
     ['scb',        'SCB'],
     ['bicec',      'BICEC'],
     ['sgc',        'SGC'],
-    ['tractafric', 'Tractafric Motors'],
     ['addax',      'Addax Petroleum'],
 ];
 
