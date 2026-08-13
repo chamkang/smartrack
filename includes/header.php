@@ -141,7 +141,8 @@ $ogImg = isset($ogImage)
         <ul>
           <li><a href="<?php echo escape(site_url('index.php')); ?>"<?php echo nav_is_active('index.php'); ?>><?php echo escape(get_translation('nav_home')); ?></a></li>
           <li class="dropdown">
-            <a href="<?php echo escape(site_url('about.php')); ?>"<?php echo nav_is_active('about.php'); ?>><span><?php echo escape(t('About Us','À Propos')); ?></span><i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <?php /* href="#" so it only opens the dropdown — "Our Story" is the link to the page */ ?>
+            <a href="#"<?php echo nav_is_active('about.php'); ?>><span><?php echo escape(t('About Us','À Propos')); ?></span><i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="<?php echo escape(site_url('about.php')); ?>"><?php echo escape(t('Our Story','Notre Histoire')); ?></a></li>
               <li><a href="<?php echo escape(site_url('about.php#our-partners')); ?>"><?php echo escape(t('Our Partners','Nos Partenaires')); ?></a></li>
