@@ -129,18 +129,19 @@ a {
   color: #52565e;
 }*/
 
-.sitename span.text-danger {
-  color:#df1529; /* Red color */
-}
+/* Logo wordmark: "SMAR" black, the "T" split black/red, "RACK" red.
+   Fixed colours — the header is always white, so the logo never goes white.
+   !important is needed because Bootstrap's .text-danger sets its own red. */
+.header .sitename,
+.header .logo h1 { color:#000 !important; }
 
-/* Logo wordmark: the "T" is split half-and-half. Left half follows the logo
-   colour (black on light backgrounds, white over the dark hero) so it never
-   disappears; right half is always brand red. "RACK" stays red. */
+.sitename span.text-danger { color:#e60000 !important; }
+
 .sitename .logo-t-split {
-  background:linear-gradient(90deg,currentColor 0%,currentColor 50%,#df1529 50%,#df1529 100%);
+  background:linear-gradient(90deg,#000 0%,#000 50%,#e60000 50%,#e60000 100%);
   -webkit-background-clip:text;
   background-clip:text;
-  -webkit-text-fill-color:transparent;
+  -webkit-text-fill-color:transparent !important;
 }
 
 a:hover {
@@ -214,13 +215,16 @@ h6 {
 # Global Header
 --------------------------------------------------------------*/
 .header {
-  --background-color: rgba(255, 255, 255, 0);
-  --default-color: #ffffff;
-  --heading-color: #ffffff;
+  /* always solid white — the header is no longer transparent over the hero */
+  --background-color: #ffffff;
+  --default-color: #3c3c3c;
+  --heading-color: #3c3c3c;
+  --nav-color: #3c3c3c;
+  --nav-hover-color: #e60000;
   color: var(--default-color);
-  background-color: var(--background-color);
+  background-color: #ffffff;
   padding: 20px 0;
-  transition: all 0.5s;
+  transition: box-shadow 0.3s, padding 0.3s;
   z-index: 997;
 }
 
