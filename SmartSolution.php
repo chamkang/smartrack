@@ -20,7 +20,7 @@ include __DIR__ . '/includes/header.php';
 /* Hero */
 .ss-hero {
   min-height:100vh;display:flex;align-items:center;
-  background:linear-gradient(135deg,#030b14 0%,#050f1c 60%,#0a0612 100%);
+  background:linear-gradient(135deg,#03060d 0%,#080f1a 55%,#140505 100%);
   position:relative;overflow:hidden;
 }
 .ss-hero-orbs { position:absolute;inset:0;pointer-events:none; }
@@ -113,7 +113,7 @@ include __DIR__ . '/includes/header.php';
 ══════════════════════════════════════════ -->
 <section class="ss-hero">
   <div class="ss-hero-orbs">
-    <div class="ss-orb" style="width:500px;height:500px;background:#3b82f620;top:-100px;right:-50px;animation-delay:0s;"></div>
+    <div class="ss-orb" style="width:500px;height:500px;background:#e6000022;top:-100px;right:-50px;animation-delay:0s;"></div>
     <div class="ss-orb" style="width:400px;height:400px;background:#8b5cf615;bottom:-80px;left:-80px;animation-delay:3s;"></div>
     <div class="ss-orb" style="width:300px;height:300px;background:#e6000010;top:40%;left:40%;animation-delay:6s;"></div>
   </div>
@@ -124,19 +124,19 @@ include __DIR__ . '/includes/header.php';
       <!-- Left -->
       <div class="col-lg-6" data-aos="fade-right">
         <div style="display:inline-flex;align-items:center;gap:8px;
-                    background:rgba(59,130,246,.15);border:1px solid rgba(59,130,246,.3);
+                    background:rgba(230,0,0,.15);border:1px solid rgba(230,0,0,.3);
                     border-radius:30px;padding:5px 16px;margin-bottom:22px;">
-          <span style="width:7px;height:7px;background:#3b82f6;border-radius:50%;
-                        box-shadow:0 0 0 3px rgba(59,130,246,.3);animation:ss-pulse 2s infinite;"></span>
+          <span style="width:7px;height:7px;background:#e60000;border-radius:50%;
+                        box-shadow:0 0 0 3px rgba(230,0,0,.3);animation:ss-pulse 2s infinite;"></span>
           <span style="font-size:.78rem;font-weight:700;color:rgba(255,255,255,.8);letter-spacing:.07em;text-transform:uppercase;">
             <?php echo escape(get_translation('ss_platform_badge')); ?>
           </span>
         </div>
-        <style>@keyframes ss-pulse{0%,100%{box-shadow:0 0 0 3px rgba(59,130,246,.3)}50%{box-shadow:0 0 0 8px rgba(59,130,246,.06)}}</style>
+        <style>@keyframes ss-pulse{0%,100%{box-shadow:0 0 0 3px rgba(230,0,0,.3)}50%{box-shadow:0 0 0 8px rgba(230,0,0,.06)}}</style>
 
         <h1 style="font-size:clamp(2.8rem,5.5vw,4.2rem);font-weight:900;color:#fff;
                    line-height:1.05;letter-spacing:-.04em;margin-bottom:20px;">
-          Smart<span style="color:#3b82f6;">Solution</span>
+          Smart<span style="color:#e60000;">Solution</span>
         </h1>
         <p style="font-size:1.1rem;color:rgba(255,255,255,.6);line-height:1.8;
                   max-width:520px;margin-bottom:36px;">
@@ -145,11 +145,11 @@ include __DIR__ . '/includes/header.php';
 
         <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:40px;">
           <a href="<?php echo escape(site_url('contact.php')); ?>"
-             style="display:inline-flex;align-items:center;gap:10px;background:#3b82f6;color:#fff;
+             style="display:inline-flex;align-items:center;gap:10px;background:#e60000;color:#fff;
                     font-weight:700;font-size:.95rem;padding:14px 32px;border-radius:50px;
-                    text-decoration:none;box-shadow:0 6px 24px rgba(59,130,246,.4);transition:all .25s;"
-             onmouseover="this.style.background='#2563eb';this.style.transform='translateY(-2px)'"
-             onmouseout="this.style.background='#3b82f6';this.style.transform='none'">
+                    text-decoration:none;box-shadow:0 6px 24px rgba(230,0,0,.4);transition:all .25s;"
+             onmouseover="this.style.background='#c40000';this.style.transform='translateY(-2px)'"
+             onmouseout="this.style.background='#e60000';this.style.transform='none'">
             <i class="bi bi-shield-fill-check"></i> <?php echo escape(get_translation('ss_security_btn')); ?>
           </a>
           <a href="#video-surveillance"
@@ -159,14 +159,14 @@ include __DIR__ . '/includes/header.php';
                     border-radius:50px;text-decoration:none;transition:all .25s;"
              onmouseover="this.style.background='rgba(255,255,255,.13)'"
              onmouseout="this.style.background='rgba(255,255,255,.07)'">
-            <i class="bi bi-arrow-down-circle" style="color:#3b82f6;"></i> <?php echo escape(get_translation('ss_explore_btn')); ?>
+            <i class="bi bi-arrow-down-circle" style="color:#e60000;"></i> <?php echo escape(get_translation('ss_explore_btn')); ?>
           </a>
         </div>
 
         <div style="display:flex;flex-wrap:wrap;gap:18px;">
           <?php foreach ([t('Video Surveillance','Vidéosurveillance'),t('Access Control','Contrôle d\'Accès'),t('Fire Detection','Détection Incendie'),t('Network Security','Sécurité Réseau'),t('Time Management','Gestion du Temps')] as $t): ?>
             <div style="display:flex;align-items:center;gap:7px;font-size:.8rem;color:rgba(255,255,255,.45);">
-              <i class="bi bi-check-circle-fill" style="color:#3b82f6;font-size:.7rem;"></i><?php echo $t; ?>
+              <i class="bi bi-check-circle-fill" style="color:#e60000;font-size:.7rem;"></i><?php echo $t; ?>
             </div>
           <?php endforeach; ?>
         </div>
@@ -552,9 +552,9 @@ include __DIR__ . '/includes/header.php';
           <?php echo escape(get_translation('ss_integration_sub')); ?>
         </p>
         <a href="<?php echo escape(site_url('contact.php')); ?>"
-           style="display:inline-flex;align-items:center;gap:10px;background:#3b82f6;color:#fff;
+           style="display:inline-flex;align-items:center;gap:10px;background:#e60000;color:#fff;
                   font-weight:700;font-size:.9rem;padding:13px 28px;border-radius:50px;
-                  text-decoration:none;box-shadow:0 4px 18px rgba(59,130,246,.4);transition:.25s;"
+                  text-decoration:none;box-shadow:0 4px 18px rgba(230,0,0,.4);transition:.25s;"
            onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">
           <i class="bi bi-shield-fill-check"></i> <?php echo escape(get_translation('ss_request_audit')); ?>
         </a>
@@ -589,7 +589,7 @@ include __DIR__ . '/includes/header.php';
 <!-- ══════════════════════════════════════════
      CTA
 ══════════════════════════════════════════ -->
-<section style="background:linear-gradient(135deg,#1d4ed8,#1e3a8a);padding:88px 0;
+<section style="background:linear-gradient(135deg,#c40000,#8b0000);padding:88px 0;
                 position:relative;overflow:hidden;">
   <div style="position:absolute;top:-80px;right:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04);"></div>
   <div class="container text-center position-relative" data-aos="fade-up">
@@ -602,7 +602,7 @@ include __DIR__ . '/includes/header.php';
     </p>
     <div style="display:flex;justify-content:center;flex-wrap:wrap;gap:14px;">
       <a href="<?php echo escape(site_url('contact.php')); ?>"
-         style="display:inline-flex;align-items:center;gap:10px;background:#fff;color:#1d4ed8;
+         style="display:inline-flex;align-items:center;gap:10px;background:#fff;color:#c40000;
                 font-weight:800;font-size:1rem;padding:16px 40px;border-radius:50px;
                 text-decoration:none;box-shadow:0 6px 24px rgba(0,0,0,.2);transition:.3s;"
          onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform='none'">
