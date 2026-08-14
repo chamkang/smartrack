@@ -172,6 +172,13 @@ $pageLabel = $breadcrumbs[$currentPage] ?? ($pageTitle ?? 'Admin');
       <div class="sidebar-section-label">Site</div>
 
       <div class="sidebar-item">
+        <a href="account.php" class="sidebar-link<?php echo nav_active('account.php'); ?>">
+          <span class="sidebar-icon"><i class="bi bi-person-lock"></i></span>
+          My Account
+        </a>
+      </div>
+
+      <div class="sidebar-item">
         <a href="<?php echo escape(site_url('index.php')); ?>" class="sidebar-link" target="_blank">
           <span class="sidebar-icon"><i class="bi bi-box-arrow-up-right"></i></span>
           View Website

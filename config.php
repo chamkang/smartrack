@@ -1,6 +1,14 @@
 <?php
 // ── Database (SQLite) ─────────────────────────────────────
-define('DB_PATH', __DIR__ . '/smartrack.db');
+// On shared hosting the safest place for the database is OUTSIDE the web root,
+// so it can never be downloaded even if .htaccess is ignored. If a database
+// exists one level above this folder (e.g. /home/user/smartrack-data/ next to
+// public_html), it is used automatically; otherwise we fall back to the copy
+// beside the site, which .htaccess denies access to.
+if (!defined('DB_PATH')) {
+    $externalDb = dirname(__DIR__) . '/smartrack-data/smartrack.db';
+    define('DB_PATH', is_file($externalDb) ? $externalDb : __DIR__ . '/smartrack.db');
+}
 
 // ── Base URL (auto-detected) ──────────────────────────────
 // Calculates the web path from document root to this project folder.
