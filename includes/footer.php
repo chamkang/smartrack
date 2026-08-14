@@ -28,11 +28,25 @@
               <span><?php echo escape($contact['email'] ?? 'info@smartrackafrica.com'); ?></span>
             </p>
           </div>
+          <?php
+          /* Only show a network we actually have a link for — an icon that goes
+             nowhere is worse than no icon. Set these in Admin → Contact Info. */
+          $socials = [
+              'facebook'  => ['bi-facebook',  'Facebook'],
+              'instagram' => ['bi-instagram', 'Instagram'],
+              'twitter'   => ['bi-twitter-x', 'X (Twitter)'],
+              'linkedin'  => ['bi-linkedin',  'LinkedIn'],
+          ];
+          ?>
           <div class="social-links d-flex mt-4">
-            <a href="<?php echo escape($contact['twitter']  ?? '#'); ?>"><i class="bi bi-twitter-x"></i></a>
-            <a href="<?php echo escape($contact['facebook'] ?? '#'); ?>"><i class="bi bi-facebook"></i></a>
-            <a href="<?php echo escape($contact['instagram']?? '#'); ?>"><i class="bi bi-instagram"></i></a>
-            <a href="<?php echo escape($contact['linkedin'] ?? '#'); ?>"><i class="bi bi-linkedin"></i></a>
+            <?php foreach ($socials as $key => [$icon, $label]):
+              $url = trim($contact[$key] ?? '');
+              if ($url === '' || $url === '#') continue; ?>
+              <a href="<?php echo escape($url); ?>" target="_blank" rel="noopener noreferrer"
+                 aria-label="<?php echo escape($label); ?>" title="<?php echo escape($label); ?>">
+                <i class="bi <?php echo $icon; ?>"></i>
+              </a>
+            <?php endforeach; ?>
           </div>
         </div>
 
@@ -44,8 +58,10 @@
             <li><a href="<?php echo escape(site_url('about.php')); ?>"><?php echo escape(get_translation('footer_about')); ?></a></li>
             <li><a href="<?php echo escape(site_url('career.php')); ?>"><?php echo escape(get_translation('footer_career')); ?></a></li>
             <li><a href="<?php echo escape(site_url('contact.php')); ?>"><?php echo escape(get_translation('footer_contact_link')); ?></a></li>
-            <li><a href="#"><?php echo escape(get_translation('footer_terms')); ?></a></li>
-            <li><a href="#"><?php echo escape(get_translation('footer_privacy')); ?></a></li>
+            <?php /* Placeholders until these pages exist: clicking does nothing at all —
+                     no jump to top, no "#" appended to the URL. */ ?>
+            <li><a href="#" onclick="return false;"><?php echo escape(get_translation('footer_terms')); ?></a></li>
+            <li><a href="#" onclick="return false;"><?php echo escape(get_translation('footer_privacy')); ?></a></li>
           </ul>
         </div>
 
