@@ -19,4 +19,12 @@ if ($name === '' || $email === '' || $message === '') {
 
 $stmt = db()->prepare('INSERT INTO contact_messages (name, email, subject, message, created_at) VALUES (:name, :email, :subject, :message, CURRENT_TIMESTAMP)');
 $stmt->execute([':name' => $name, ':email' => $email, ':subject' => $subject, ':message' => $message]);
+
+notify_admin('New contact message from ' . $name, [
+    'Name'    => $name,
+    'Email'   => $email,
+    'Subject' => $subject,
+    'Message' => $message,
+], $email);
+
 redirect(site_url('contact.php?success=message'));

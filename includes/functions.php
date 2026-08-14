@@ -162,6 +162,69 @@ function get_contact(): array
     return $row ?: [];
 }
 
+/**
+ * Strip anything that could inject extra mail headers (CR/LF and nulls).
+ * Never put raw user input into a header without this.
+ */
+function mail_header_safe(string $v): string
+{
+    return trim(str_replace(["\r", "\n", "%0a", "%0d", "\0"], ' ', $v));
+}
+
+/**
+ * Email the site owner that a form was submitted.
+ *
+ * Deliberately best-effort: the submission is already stored in the database,
+ * which is the source of truth, so a mail failure must never break the form or
+ * show the visitor an error. Returns true only if the mail server accepted it.
+ *
+ * @param string $subject   Plain subject line.
+ * @param array  $fields    label => value pairs shown in the body.
+ * @param string $replyTo   Visitor's email, so "Reply" goes straight to them.
+ */
+function notify_admin(string $subject, array $fields, string $replyTo = ''): bool
+{
+    // Where to send: contacts table first, then a constant, then nothing.
+    $contact = get_contact();
+    $to = trim($contact['email'] ?? '');
+    if ($to === '' && defined('NOTIFY_EMAIL')) { $to = NOTIFY_EMAIL; }
+    if ($to === '' || !filter_var($to, FILTER_VALIDATE_EMAIL)) { return false; }
+
+    $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+    $from = 'no-reply@' . preg_replace('/^www\./', '', mail_header_safe($host));
+
+    $lines = ["You have a new submission from the SMARTRACK website.", ''];
+    foreach ($fields as $label => $value) {
+        $value = trim((string) $value);
+        if ($value === '') { continue; }
+        $lines[] = $label . ': ' . $value;
+    }
+    $lines[] = '';
+    $lines[] = 'Received: ' . date('Y-m-d H:i:s');
+    $lines[] = 'View it in the admin panel under Messages / Quotes / Applications.';
+    $body = implode("\r\n", $lines);
+
+    $headers = [
+        'From: SMARTRACK Website <' . $from . '>',
+        'Content-Type: text/plain; charset=UTF-8',
+        'X-Mailer: PHP/' . phpversion(),
+    ];
+    if ($replyTo !== '' && filter_var($replyTo, FILTER_VALIDATE_EMAIL)) {
+        $headers[] = 'Reply-To: ' . mail_header_safe($replyTo);
+    }
+
+    try {
+        return @mail(
+            mail_header_safe($to),
+            mail_header_safe($subject),
+            $body,
+            implode("\r\n", $headers)
+        );
+    } catch (Throwable $e) {
+        return false;   // never let a mail problem surface to the visitor
+    }
+}
+
 function upload_image(string $fieldName, string $targetDir): ?string
 {
     if (empty($_FILES[$fieldName]) || $_FILES[$fieldName]['error'] === UPLOAD_ERR_NO_FILE) {

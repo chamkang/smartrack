@@ -19,4 +19,12 @@ if ($name === '' || $email === '' || $phone === '' || $message === '') {
 
 $stmt = db()->prepare('INSERT INTO quote_requests (name, email, phone, message, created_at) VALUES (:name, :email, :phone, :message, CURRENT_TIMESTAMP)');
 $stmt->execute([':name' => $name, ':email' => $email, ':phone' => $phone, ':message' => $message]);
+
+notify_admin('New quote request from ' . $name, [
+    'Name'    => $name,
+    'Email'   => $email,
+    'Phone'   => $phone,
+    'Message' => $message,
+], $email);
+
 redirect(site_url('contact.php?success=quote'));

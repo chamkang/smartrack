@@ -47,4 +47,13 @@ db()->prepare('
     $cv['original_name'],
 ]);
 
+notify_admin('New job application: ' . ($jobTitle ?: 'General Application'), [
+    'Position'  => $jobTitle ?: 'General Application',
+    'Name'      => $name,
+    'Email'     => $email,
+    'Phone'     => $phone,
+    'CV'        => $cv['original_name'],
+    'Cover note'=> $letter,
+], $email);
+
 redirect(site_url('career.php?success=1' . ($jobId ? '&jid=' . $jobId : '')));

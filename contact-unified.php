@@ -30,11 +30,25 @@ if ($type === 'quote') {
         INSERT INTO quote_requests (name, email, phone, message, created_at)
         VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
     ')->execute([$name, $email, $phone, $message]);
+
+    notify_admin('New quote request from ' . $name, [
+        'Name'    => $name,
+        'Email'   => $email,
+        'Phone'   => $phone,
+        'Message' => $message,
+    ], $email);
 } else {
     db()->prepare('
         INSERT INTO contact_messages (name, email, subject, message, created_at)
         VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
     ')->execute([$name, $email, $subject, $message]);
+
+    notify_admin('New contact message from ' . $name, [
+        'Name'    => $name,
+        'Email'   => $email,
+        'Subject' => $subject,
+        'Message' => $message,
+    ], $email);
 }
 
 redirect(site_url('contact.php?success=1&type=' . urlencode($type)));
