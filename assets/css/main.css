@@ -136,7 +136,7 @@ a {
 .sitename { --logo-ink:#000; }
 .header .sitename,
 .header .logo h1 { color:#000 !important; --logo-ink:#000; }
-.footer .sitename { color:#fff !important; --logo-ink:#fff; }
+.footer .sitename { color:#000 !important; --logo-ink:#000; }
 
 .sitename span.text-danger { color:#e60000 !important; }
 
@@ -533,25 +533,29 @@ h6 {
 /*--------------------------------------------------------------
 # Global Footer
 --------------------------------------------------------------*/
+/* Light footer. The previous rule pointed at a background image with a path
+   relative to this stylesheet, so it resolved to assets/css/assets/img/... and
+   404'd; the `background` shorthand also wiped the background-color set above
+   it. Both are replaced by a flat tone here — a soft grey that stays clearly
+   distinct from the white page body. */
 .footer {
+  --background-color: #e6e9ec;
+  --default-color: #2c3033;
+  --heading-color: #14171a;
   color: var(--default-color);
-  background-color: var(--background-color);
-  background: url("assets/img/Discover and download free images Efficient #Logistics Hub_ Fleet of #Trucks at Modern Loading Dock https___aifusionart_com_efficient-logistics-hub-fleet-of-trucks-at-modern-loading-dock__utm_source=facebook&utm_medi.jpg") top center no-repeat;
-  background-size: cover;
+  background: var(--background-color);
   font-size: 14px;
   position: relative;
+  border-top: 1px solid #d3d8dd;
 }
 
 .footer .container {
   position: relative;
 }
 
-.footer:before {
-  content: "";
-  background: color-mix(in srgb, var(--background-color), transparent 20%);
-  position: absolute;
-  inset: 0;
-}
+/* The dark scrim existed only to darken the old background photo — not needed
+   now the footer is a flat light tone. */
+.footer:before { content: none; }
 
 .footer .footer-top {
   padding-top: 50px;
@@ -633,7 +637,9 @@ h6 {
 }
 
 .footer .footer-links ul a {
-  color: color-mix(in srgb, var(--default-color), transparent 30%);
+  /* Only a slight fade: the 30% used for the old dark footer drops dark-on-light
+     text to ~3.6:1, under the 4.5:1 minimum for body copy. */
+  color: color-mix(in srgb, var(--default-color), transparent 8%);
   display: inline-block;
   line-height: 1;
 }
