@@ -185,9 +185,27 @@ document.querySelectorAll('.toggle-dropdown > a').forEach(navLink => {
    */
   const preloader = document.querySelector('#preloader');
   if (preloader) {
-    window.addEventListener('load', () => {
-      preloader.remove();
-    });
+    let hidden = false;
+    const hidePreloader = () => {
+      if (hidden) return;
+      hidden = true;
+      preloader.style.transition = 'opacity .25s ease-out';
+      preloader.style.opacity = '0';
+      setTimeout(() => preloader.remove(), 250);
+    };
+
+    /* Hide as soon as the DOM is parsed. Stylesheets are render-blocking, so
+       the page is already styled at this point — waiting for "load" meant
+       waiting for every image and vendor script too, which held the spinner
+       on screen long after the page was usable. */
+    if (document.readyState === 'interactive' || document.readyState === 'complete') {
+      hidePreloader();
+    } else {
+      document.addEventListener('DOMContentLoaded', hidePreloader);
+    }
+
+    window.addEventListener('load', hidePreloader);   // in case DOM was already done
+    setTimeout(hidePreloader, 3000);                  // failsafe: never trap the visitor
   }
 
   /**
