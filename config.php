@@ -11,18 +11,43 @@ if (!defined('DB_PATH')) {
 }
 
 // ── Base URL (auto-detected) ──────────────────────────────
-// Calculates the web path from document root to this project folder.
-// Works correctly whether the site is at / or /smartrack/ or any subfolder.
+// The web path from the document root to this folder: '' when the site is the
+// whole domain (shared hosting), '/smartrack' when it sits in a subfolder
+// (local XAMPP).
+//
+// Set BASE_URL_OVERRIDE below if a host ever detects it wrongly:
+//   define('BASE_URL', '');          // site is the whole domain
 if (!defined('BASE_URL')) {
-    if (isset($_SERVER['DOCUMENT_ROOT']) && $_SERVER['DOCUMENT_ROOT'] !== '') {
-        $docRoot    = rtrim(str_replace('\\', '/', realpath($_SERVER['DOCUMENT_ROOT'])), '/');
-        $projectDir = rtrim(str_replace('\\', '/', realpath(__DIR__)), '/');
-        $base = str_replace($docRoot, '', $projectDir);
-        define('BASE_URL', $base === '' ? '' : $base);
-    } else {
-        // CLI fallback (setup.php, etc.) — no HTTP requests, URL not needed
-        define('BASE_URL', '');
+    $base = '';
+
+    $docRootRaw = $_SERVER['DOCUMENT_ROOT'] ?? '';
+    if ($docRootRaw !== '') {
+        $docRoot    = realpath($docRootRaw);
+        $projectDir = realpath(__DIR__);
+
+        if ($docRoot !== false && $projectDir !== false) {
+            $docRoot    = rtrim(str_replace('\\', '/', $docRoot), '/');
+            $projectDir = rtrim(str_replace('\\', '/', $projectDir), '/');
+
+            // Only trust the result when the project really sits inside the
+            // document root. On cPanel these can resolve to different paths
+            // (symlinks), and a blind str_replace would leave the full server
+            // path — e.g. "/home/user/public_html" — in every asset URL.
+            if ($projectDir === $docRoot) {
+                $base = '';
+            } elseif (str_starts_with($projectDir . '/', $docRoot . '/')) {
+                $base = substr($projectDir, strlen($docRoot));
+            }
+        }
     }
+
+    // A real base path is a short URL fragment. Anything containing a filesystem
+    // marker means detection failed, so fall back to the domain root.
+    if ($base !== '' && (preg_match('#(^|/)(home|var|usr|srv|Users)(/|$)#', $base) || str_contains($base, ':'))) {
+        $base = '';
+    }
+
+    define('BASE_URL', $base);
 }
 
 // ── Uploads ───────────────────────────────────────────────
