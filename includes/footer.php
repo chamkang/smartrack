@@ -29,21 +29,24 @@
             </p>
           </div>
           <?php
-          /* Only show a network we actually have a link for — an icon that goes
-             nowhere is worse than no icon. Set these in Admin → Contact Info. */
+          /* [icon, label, fallback URL]. The fallback is used when the contacts
+             table has nothing for that network — the database is not deployed
+             with the code, so without it the icons would vanish on a fresh
+             server. A value set in Admin → Contact Info always wins. */
           $socials = [
-              'facebook'  => ['bi-facebook',  'Facebook'],
-              'instagram' => ['bi-instagram', 'Instagram'],
+              'facebook'  => ['bi-facebook',  'Facebook',  'https://www.facebook.com/share/1BpBAvJnxF/?mibextid=wwXIfr'],
+              'instagram' => ['bi-instagram', 'Instagram', 'https://www.instagram.com/smartrackafrica?utm_source=qr'],
               // Hidden for now — uncomment a line to bring the icon back, then
               // add its URL in Admin → Contact Info.
-              // 'twitter'   => ['bi-twitter-x', 'X (Twitter)'],
-              // 'linkedin'  => ['bi-linkedin',  'LinkedIn'],
+              // 'twitter'   => ['bi-twitter-x', 'X (Twitter)', ''],
+              // 'linkedin'  => ['bi-linkedin',  'LinkedIn',    ''],
           ];
           ?>
           <div class="social-links d-flex mt-4">
-            <?php foreach ($socials as $key => [$icon, $label]):
+            <?php foreach ($socials as $key => [$icon, $label, $fallback]):
               $url = trim($contact[$key] ?? '');
-              if ($url === '' || $url === '#') continue; ?>
+              if ($url === '' || $url === '#') { $url = $fallback; }
+              if ($url === '') continue; ?>
               <a href="<?php echo escape($url); ?>" target="_blank" rel="noopener noreferrer"
                  aria-label="<?php echo escape($label); ?>" title="<?php echo escape($label); ?>">
                 <i class="bi <?php echo $icon; ?>"></i>
