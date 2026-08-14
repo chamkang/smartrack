@@ -34,8 +34,10 @@
           $socials = [
               'facebook'  => ['bi-facebook',  'Facebook'],
               'instagram' => ['bi-instagram', 'Instagram'],
-              'twitter'   => ['bi-twitter-x', 'X (Twitter)'],
-              'linkedin'  => ['bi-linkedin',  'LinkedIn'],
+              // Hidden for now — uncomment a line to bring the icon back, then
+              // add its URL in Admin → Contact Info.
+              // 'twitter'   => ['bi-twitter-x', 'X (Twitter)'],
+              // 'linkedin'  => ['bi-linkedin',  'LinkedIn'],
           ];
           ?>
           <div class="social-links d-flex mt-4">
