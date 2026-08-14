@@ -129,16 +129,20 @@ a {
   color: #52565e;
 }*/
 
-/* Logo wordmark: "SMAR" black, the "T" split black/red, "RACK" red.
-   Fixed colours — the header is always white, so the logo never goes white.
+/* Logo wordmark: "SMAR" + a half-and-half "T" + red "RACK".
+   --logo-ink is the dark half: black on the white header, white on the dark
+   footer (pure black would be invisible there). "RACK" is always brand red.
    !important is needed because Bootstrap's .text-danger sets its own red. */
+.sitename { --logo-ink:#000; }
 .header .sitename,
-.header .logo h1 { color:#000 !important; }
+.header .logo h1 { color:#000 !important; --logo-ink:#000; }
+.footer .sitename { color:#fff !important; --logo-ink:#fff; }
 
 .sitename span.text-danger { color:#e60000 !important; }
 
 .sitename .logo-t-split {
-  background:linear-gradient(90deg,#000 0%,#000 50%,#e60000 50%,#e60000 100%);
+  background:linear-gradient(90deg,
+    var(--logo-ink) 0%, var(--logo-ink) 50%, #e60000 50%, #e60000 100%);
   -webkit-background-clip:text;
   background-clip:text;
   -webkit-text-fill-color:transparent !important;

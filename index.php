@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = t('Smartrack Africa — GPS Fleet Tracking & Vehicle Security in Cameroon',
-               'Smartrack Africa — Suivi GPS de Flotte & Sécurité Véhicule au Cameroun');
+$pageTitle = t('SMARTRACK Africa — GPS Fleet Tracking & Vehicle Security in Cameroon',
+               'SMARTRACK Africa — Suivi GPS de Flotte & Sécurité Véhicule au Cameroun');
 $metaDescription = t(
   'Real-time GPS vehicle tracking, fuel monitoring and fleet security for businesses in Cameroon and Central Africa. Cut fuel costs up to 30%, stop theft, and manage your whole fleet from one dashboard. 24/7 local support in English and French.',
   "Suivi GPS de véhicules en temps réel, surveillance du carburant et sécurité de flotte pour les entreprises au Cameroun et en Afrique centrale. Réduisez les coûts de carburant jusqu'à 30%, stoppez le vol et gérez toute votre flotte depuis un seul tableau de bord. Support local 24h/7j en français et en anglais."
@@ -456,7 +456,7 @@ include __DIR__ . '/includes/header.php';
 .idx-step-inner h4 { font-size:1rem;font-weight:700;color:#1a202c;margin-bottom:8px; }
 .idx-step-inner p  { font-size:.875rem;color:#64748b;line-height:1.6; }
 
-/* ── Why Smartrack (dark) ── */
+/* ── Why SMARTRACK (dark) ── */
 .idx-why {
   background:linear-gradient(135deg,#000 0%,#0a0a0a 100%);
   color:#fff;
@@ -741,7 +741,7 @@ include __DIR__ . '/includes/header.php';
         <div style="display:inline-block;background:rgba(230,0,0,.15);border:1px solid rgba(230,0,0,.3);
                     border-radius:30px;padding:4px 16px;margin-bottom:16px;">
           <span style="font-size:.72rem;font-weight:700;color:#ff6666;letter-spacing:.08em;text-transform:uppercase;">
-            <?php echo escape(t('Why Choose Smartrack', 'Pourquoi Choisir Smartrack')); ?>
+            <?php echo escape(t('Why Choose SMARTRACK', 'Pourquoi Choisir SMARTRACK')); ?>
           </span>
         </div>
         <h2 style="font-size:clamp(1.8rem,3.5vw,2.6rem);font-weight:800;color:#fff;
@@ -802,7 +802,7 @@ include __DIR__ . '/includes/header.php';
       <?php
       $steps = [
         ['bi-cpu-fill',       '01', t('Install the Tracker','Installer le Traceur'),    t('Our certified technician installs a discreet GPS device in each vehicle. The process takes less than 30 minutes per vehicle with zero downtime.', "Notre technicien certifié installe un boîtier GPS discret dans chaque véhicule en moins de 30 minutes, sans interruption d'activité.")],
-        ['bi-phone-fill',     '02', t('Monitor in Real Time','Surveiller en Temps Réel'),t('Log in to your Smartrack web or mobile dashboard from anywhere. See every vehicle, driver score, fuel level and alert — live.', "Connectez-vous à votre tableau de bord Smartrack depuis n'importe où. Voir chaque véhicule, score conducteur, niveau de carburant et alerte — en direct.")],
+        ['bi-phone-fill',     '02', t('Monitor in Real Time','Surveiller en Temps Réel'),t('Log in to your SMARTRACK web or mobile dashboard from anywhere. See every vehicle, driver score, fuel level and alert — live.', "Connectez-vous à votre tableau de bord SMARTRACK depuis n'importe où. Voir chaque véhicule, score conducteur, niveau de carburant et alerte — en direct.")],
         ['bi-graph-up-arrow', '03', t('Optimise & Save','Optimiser & Économiser'),       t('Receive automated weekly reports. Identify waste, reward safe drivers, and cut costs. Most clients see ROI within the first 90 days.', "Recevez des rapports hebdomadaires automatisés. Identifiez les gaspillages et réduisez les coûts. La plupart des clients voient un ROI dans les 90 premiers jours.")],
       ];
       foreach ($steps as $i => [$icon,$num,$title,$desc]):
@@ -847,7 +847,7 @@ include __DIR__ . '/includes/header.php';
           <?php echo escape(t('Total fleet control in one view', 'Contrôle total de la flotte en une seule vue')); ?>
         </h2>
         <p style="color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:28px;font-size:.975rem;">
-          <?php echo escape(t('Your Smartrack dashboard gives you instant visibility across every vehicle, driver, and zone — on any device, anywhere in the world.', "Votre tableau de bord Smartrack vous donne une visibilité instantanée sur chaque véhicule, conducteur et zone — sur n'importe quel appareil, partout dans le monde.")); ?>
+          <?php echo escape(t('Your SMARTRACK dashboard gives you instant visibility across every vehicle, driver, and zone — on any device, anywhere in the world.', "Votre tableau de bord SMARTRACK vous donne une visibilité instantanée sur chaque véhicule, conducteur et zone — sur n'importe quel appareil, partout dans le monde.")); ?>
         </p>
         <div class="d-flex flex-column gap-3 mb-32" style="margin-bottom:32px;">
           <?php
@@ -987,7 +987,7 @@ include __DIR__ . '/includes/header.php';
 <section class="section" style="background:linear-gradient(135deg,#f8f9fb 0%,#f0f0f0 100%);position:relative;overflow:hidden;">
   <div class="container" style="position:relative;z-index:2;">
     <div class="section-title" data-aos="fade-up">
-      <h2><?php echo escape(t('Why Smartrack Stands Out', 'Pourquoi Smartrack Se Démarque')); ?></h2>
+      <h2><?php echo escape(t('Why SMARTRACK Stands Out', 'Pourquoi SMARTRACK Se Démarque')); ?></h2>
       <p><?php echo escape(t('Trusted by 232+ businesses across Africa for reliability and innovation', 'La confiance de plus de 232 entreprises en Afrique pour sa fiabilité et son innovation')); ?></p>
     </div>
     <div class="row g-4">
@@ -1127,8 +1127,9 @@ include __DIR__ . '/includes/header.php';
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════
-     § 7  TESTIMONIALS
+     § 7  TESTIMONIALS  (hidden for now — delete the if-guard to restore)
 ════════════════════════════════════════════════════════════ -->
+<?php if (false): ?>
 <section id="testimonials" class="testimonials section light-background">
   <div class="container section-title" data-aos="fade-up">
     <h2><span id="testimony"><?php echo escape(get_translation('testimony')); ?></span></h2>
@@ -1175,6 +1176,7 @@ include __DIR__ . '/includes/header.php';
     </div>
   </div>
 </section>
+<?php endif; /* end hidden Testimonials section */ ?>
 
 <!-- ═══════════════════════════════════════════════════════════
      § 7.5  FAQ  (also emitted as FAQPage structured data for SEO)
@@ -1188,8 +1190,8 @@ $faqs = [
 
   [ t('How long does installation take?',
       "Combien de temps prend l'installation ?"),
-    t('A certified Smartrack technician installs a discreet GPS tracker in under 30 minutes per vehicle, with no downtime for your operations. Fuel sensors and camera systems take around 2 hours. We can install at your premises anywhere in Douala, Yaoundé and Bafoussam.',
-      "Un technicien certifié Smartrack installe un traceur GPS discret en moins de 30 minutes par véhicule, sans interrompre vos opérations. Les capteurs de carburant et systèmes de caméras prennent environ 2 heures. Nous intervenons sur votre site à Douala, Yaoundé et Bafoussam.") ],
+    t('A certified SMARTRACK technician installs a discreet GPS tracker in under 30 minutes per vehicle, with no downtime for your operations. Fuel sensors and camera systems take around 2 hours. We can install at your premises anywhere in Douala, Yaoundé and Bafoussam.',
+      "Un technicien certifié SMARTRACK installe un traceur GPS discret en moins de 30 minutes par véhicule, sans interrompre vos opérations. Les capteurs de carburant et systèmes de caméras prennent environ 2 heures. Nous intervenons sur votre site à Douala, Yaoundé et Bafoussam.") ],
 
   [ t('Does the tracker still work if there is no mobile network?',
       "Le traceur fonctionne-t-il sans réseau mobile ?"),
@@ -1203,8 +1205,8 @@ $faqs = [
 
   [ t('Can I track my vehicles from my phone?',
       'Puis-je suivre mes véhicules depuis mon téléphone ?'),
-    t('Yes. Your Smartrack dashboard works in any web browser and on our mobile app. You can view live vehicle positions, replay past trips, set geofence zones and receive instant SMS or push alerts — from anywhere in the world.',
-      "Oui. Votre tableau de bord Smartrack fonctionne dans tout navigateur web et sur notre application mobile. Vous pouvez voir les positions en direct, rejouer les trajets, définir des géozones et recevoir des alertes SMS ou push instantanées — depuis n'importe où dans le monde.") ],
+    t('Yes. Your SMARTRACK dashboard works in any web browser and on our mobile app. You can view live vehicle positions, replay past trips, set geofence zones and receive instant SMS or push alerts — from anywhere in the world.',
+      "Oui. Votre tableau de bord SMARTRACK fonctionne dans tout navigateur web et sur notre application mobile. Vous pouvez voir les positions en direct, rejouer les trajets, définir des géozones et recevoir des alertes SMS ou push instantanées — depuis n'importe où dans le monde.") ],
 
   [ t('What happens if one of my vehicles is stolen?',
       "Que se passe-t-il si un de mes véhicules est volé ?"),

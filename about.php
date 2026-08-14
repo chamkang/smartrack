@@ -2,11 +2,11 @@
 require_once __DIR__ . '/includes/functions.php';
 init_session();
 
-$pageTitle = t('About Us — Smartrack Africa | GPS Tracking Since 2007',
-               'À Propos — Smartrack Africa | Suivi GPS Depuis 2007');
+$pageTitle = t('About Us — SMARTRACK Africa | GPS Tracking Since 2007',
+               'À Propos — SMARTRACK Africa | Suivi GPS Depuis 2007');
 $metaDescription = t(
-  'Founded in Douala in 2007, Smartrack Africa builds GPS tracking and security technology for African conditions. Trusted by SCB, BICEC, CFAO, Tractafric Motors and more across Cameroon.',
-  "Fondée à Douala en 2007, Smartrack Africa conçoit des technologies GPS et de sécurité adaptées aux conditions africaines. La confiance de SCB, BICEC, CFAO, Tractafric Motors et bien d'autres au Cameroun."
+  'Founded in Douala in 2007, SMARTRACK Africa builds GPS tracking and security technology for African conditions. Trusted by SCB, BICEC, CFAO, Tractafric Motors and more across Cameroon.',
+  "Fondée à Douala en 2007, SMARTRACK Africa conçoit des technologies GPS et de sécurité adaptées aux conditions africaines. La confiance de SCB, BICEC, CFAO, Tractafric Motors et bien d'autres au Cameroun."
 );
 $bodyClass = 'about-page';
 $lang      = current_language();
@@ -235,7 +235,7 @@ include __DIR__ . '/includes/header.php';
       <div class="col-lg-5" data-aos="fade-right">
         <div class="abt-story-img">
           <img src="<?php echo escape(site_url('assets/img/implantation-SMARTRACK-AFRICA-1.png')); ?>"
-               alt="Smartrack Africa">
+               alt="SMARTRACK Africa">
           <div class="abt-badge">
             <span>2007</span>
             <p><?php echo escape(get_translation('about_founded')); ?></p>
@@ -334,8 +334,8 @@ include __DIR__ . '/includes/header.php';
             "Chaque appareil que nous installons est conçu pour résister à la chaleur, l'humidité et les routes difficiles. Nous ne déployons pas tant que nous ne sommes pas confiants en ses performances.")],
         ['bi-translate',         '#3b82f6',
           t('Bilingual by Design','Bilingue par Conception'),
-          t('Smartrack operates fully in both French and English. Every client, every report, every support call — we meet you in your language.',
-            'Smartrack fonctionne entièrement en français et en anglais. Chaque client, chaque rapport, chaque appel de support — nous vous rejoignons dans votre langue.')],
+          t('SMARTRACK operates fully in both French and English. Every client, every report, every support call — we meet you in your language.',
+            'SMARTRACK fonctionne entièrement en français et en anglais. Chaque client, chaque rapport, chaque appel de support — nous vous rejoignons dans votre langue.')],
         ['bi-graph-up-arrow',    '#f59e0b',
           t('Measurable ROI',    'ROI Mesurable'),
           t('We tie our success to yours. Most clients see measurable fuel and cost savings within the first 30 days of deployment.',
@@ -398,8 +398,8 @@ include __DIR__ . '/includes/header.php';
 
         <div class="abt-founder-quote">
           <?php echo escape(t(
-            '"Africa does not need cheaper versions of Western technology — it needs solutions built from the ground up for its roads, its climate, and its people. That is exactly what Smartrack is."',
-            '"L\'Afrique n\'a pas besoin de versions moins chères de la technologie occidentale — elle a besoin de solutions conçues de zéro pour ses routes, son climat et ses populations. C\'est exactement ce qu\'est Smartrack."'
+            '"Africa does not need cheaper versions of Western technology — it needs solutions built from the ground up for its roads, its climate, and its people. That is exactly what SMARTRACK is."',
+            '"L\'Afrique n\'a pas besoin de versions moins chères de la technologie occidentale — elle a besoin de solutions conçues de zéro pour ses routes, son climat et ses populations. C\'est exactement ce qu\'est SMARTRACK."'
           )); ?>
         </div>
 
@@ -411,8 +411,8 @@ include __DIR__ . '/includes/header.php';
         </p>
         <p style="font-size:.975rem;color:#475569;line-height:1.85;margin-bottom:28px;">
           <?php echo escape(t(
-            "He founded Smartrack Africa in Douala with a commitment to building hardware that performs in Africa's conditions and software that any business owner — whether in Bonanjo or Bafoussam — could understand and use from day one.",
-            "Il a fondé Smartrack Africa à Douala avec l'engagement de développer du matériel performant dans les conditions africaines et un logiciel que tout chef d'entreprise — à Bonanjo ou à Bafoussam — puisse comprendre et utiliser dès le premier jour."
+            "He founded SMARTRACK Africa in Douala with a commitment to building hardware that performs in Africa's conditions and software that any business owner — whether in Bonanjo or Bafoussam — could understand and use from day one.",
+            "Il a fondé SMARTRACK Africa à Douala avec l'engagement de développer du matériel performant dans les conditions africaines et un logiciel que tout chef d'entreprise — à Bonanjo ou à Bafoussam — puisse comprendre et utiliser dès le premier jour."
           )); ?>
         </p>
 
@@ -472,8 +472,8 @@ include __DIR__ . '/includes/header.php';
           $milestones = [
             ['2007',
               t('Company Founded',          'Fondation de l\'Entreprise'),
-              t('Smartrack Africa was incorporated in Douala with a founding team of 3 engineers and a mission to bring reliable fleet tracking to Cameroon.',
-                "Smartrack Africa a été créée à Douala avec une équipe fondatrice de 3 ingénieurs et la mission d'apporter un suivi de flotte fiable au Cameroun.")],
+              t('SMARTRACK Africa was incorporated in Douala with a founding team of 3 engineers and a mission to bring reliable fleet tracking to Cameroon.',
+                "SMARTRACK Africa a été créée à Douala avec une équipe fondatrice de 3 ingénieurs et la mission d'apporter un suivi de flotte fiable au Cameroun.")],
             ['2019',
               t('First 50 Clients',          'Premiers 50 Clients'),
               t('Rapid adoption among logistics companies and NGOs in the Douala-Yaoundé corridor. First dedicated support centre opened.',
@@ -524,7 +524,7 @@ include __DIR__ . '/includes/header.php';
       <?php
       $team = [
         ['', t('Chief Executive Officer',      'Directeur Général'),
-             t("Leading Smartrack's vision and strategic growth across Central Africa.", "Pilote la vision et la croissance stratégique de Smartrack en Afrique centrale.")],
+             t("Leading SMARTRACK's vision and strategic growth across Central Africa.", "Pilote la vision et la croissance stratégique de SMARTRACK en Afrique centrale.")],
         ['', t('Chief Technology Officer',     'Directeur Technique'),
              t('Building and scaling the tracking platform and hardware ecosystem.', "Développe et fait évoluer la plateforme de suivi et l'écosystème matériel.")],
         ['', t('Head of Field Operations',     'Responsable des Opérations Terrain'),
@@ -534,7 +534,7 @@ include __DIR__ . '/includes/header.php';
         ['', t('Sales & Partnerships Manager', 'Responsable Ventes & Partenariats'),
              t('Growing our client base and building partnerships across the region.', "Développe notre base de clients et construit des partenariats dans toute la région.")],
         ['', t('Customer Success Lead',        'Responsable Succès Client'),
-             t('Ensuring every client extracts full value from their Smartrack deployment.', "S'assure que chaque client tire pleinement parti de son déploiement Smartrack.")],
+             t('Ensuring every client extracts full value from their SMARTRACK deployment.', "S'assure que chaque client tire pleinement parti de son déploiement SMARTRACK.")],
       ];
       foreach ($team as $i => [$photo, $role, $desc]):
       ?>
@@ -761,8 +761,8 @@ $chip = function (array $item, string $folder) use ($findLogo, $lightLogos, $wid
   <div class="container">
     <div class="section-title" data-aos="fade-up">
       <h2><?php echo escape(t('Our References','Nos Références')); ?></h2>
-      <p><?php echo escape(t('Organisations across Cameroon that trust Smartrack every day.',
-                             'Des organisations à travers le Cameroun qui font confiance à Smartrack chaque jour.')); ?></p>
+      <p><?php echo escape(t('Organisations across Cameroon that trust SMARTRACK every day.',
+                             'Des organisations à travers le Cameroun qui font confiance à SMARTRACK chaque jour.')); ?></p>
     </div>
   </div>
   <div class="logo-marquee on-grey" data-aos="fade-up" data-aos-delay="100">

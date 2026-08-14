@@ -1,8 +1,8 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = t('SmartFleet — GPS Fleet Management Platform | Smartrack Africa',
-               'SmartFleet — Plateforme de Gestion de Flotte GPS | Smartrack Africa');
+$pageTitle = t('SmartFleet — GPS Fleet Management Platform | SMARTRACK Africa',
+               'SmartFleet — Plateforme de Gestion de Flotte GPS | SMARTRACK Africa');
 $metaDescription = t(
   'SmartFleet combines live GPS tracking, fuel monitoring, driver scorecards and in-vehicle cameras in one dashboard. Cut fleet costs by up to 25% with ROI in 90 days.',
   "SmartFleet réunit le suivi GPS en direct, la surveillance du carburant, les fiches conducteur et les caméras embarquées dans un seul tableau de bord. Réduisez vos coûts jusqu'à 25% avec un ROI en 90 jours."

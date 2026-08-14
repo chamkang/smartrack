@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = t('GPS Trackers & Devices — Smartrack Africa','Traceurs GPS & Appareils — Smartrack Africa');
+$pageTitle = t('GPS Trackers & Devices — SMARTRACK Africa','Traceurs GPS & Appareils — SMARTRACK Africa');
 $metaDescription = t(
-  'GPS vehicle trackers, fuel sensors, dashcams, BLE asset beacons and biometric readers — supplied and installed across Cameroon by Smartrack Africa. IP67 rated, 4G LTE, 30-minute installation.',
-  "Traceurs GPS, capteurs de carburant, dashcams, balises BLE et lecteurs biométriques — fournis et installés au Cameroun par Smartrack Africa. Norme IP67, 4G LTE, installation en 30 minutes."
+  'GPS vehicle trackers, fuel sensors, dashcams, BLE asset beacons and biometric readers — supplied and installed across Cameroon by SMARTRACK Africa. IP67 rated, 4G LTE, 30-minute installation.',
+  "Traceurs GPS, capteurs de carburant, dashcams, balises BLE et lecteurs biométriques — fournis et installés au Cameroun par SMARTRACK Africa. Norme IP67, 4G LTE, installation en 30 minutes."
 );
 $bodyClass = 'devices-page';
 $lang      = current_language();

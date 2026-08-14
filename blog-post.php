@@ -49,12 +49,12 @@ $recent = db()->query(
      ORDER BY published_at DESC LIMIT 5'
 )->fetchAll();
 
-$pageTitle = $title . ' — Smartrack Africa Blog';
+$pageTitle = $title . ' — SMARTRACK Africa Blog';
 $metaDescription = trim(preg_replace('/\s+/', ' ', strip_tags($excerpt ?: $content)));
 $ogImage = $post['image_path'] ?: 'assets/img/blog/blog-1.jpg';
 $articleMeta = [
     'published' => $post['published_at'] ?? null,
-    'author'    => $post['author'] ?? 'Smartrack Africa',
+    'author'    => $post['author'] ?? 'SMARTRACK Africa',
     'category'  => $post['category'] ?? null,
 ];
 $bodyClass = 'blog-details-page';
@@ -268,7 +268,8 @@ include __DIR__ . '/includes/header.php';
         <!-- CTA widget -->
         <div style="background:var(--accent-color);color:#fff;border-radius:12px;padding:28px;text-align:center;">
           <i class="bi bi-geo-alt-fill" style="font-size:2.5rem;opacity:.8;"></i>
-          <h5 class="mt-3 mb-2"><?php echo escape(get_translation('blogpost_cta_title')); ?></h5>
+          <?php /* colour set explicitly: the global h5 rule overrides the inherited white */ ?>
+          <h5 class="mt-3 mb-2" style="color:#fff;"><?php echo escape(get_translation('blogpost_cta_title')); ?></h5>
           <p style="font-size:.875rem;opacity:.85;margin-bottom:20px;">
             <?php echo escape(get_translation('blogpost_cta_sub')); ?>
           </p>

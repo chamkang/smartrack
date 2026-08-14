@@ -54,7 +54,7 @@ $serviceDetails = [
       t('Reduce maintenance costs with accurate odometer data.',          'Réduisez les coûts de maintenance avec des données d\'odomètre précises.'),
     ],
     'steps' => [
-      ['01', 'bi-cpu-fill',       t('Device Installed',      'Appareil Installé'),        t('A certified Smartrack technician fits a discreet OBD or hardwired tracker in under 30 minutes — no downtime.',           "Un technicien certifié Smartrack pose un traceur OBD ou câblé discret en moins de 30 minutes — sans interruption d'activité.")],
+      ['01', 'bi-cpu-fill',       t('Device Installed',      'Appareil Installé'),        t('A certified SMARTRACK technician fits a discreet OBD or hardwired tracker in under 30 minutes — no downtime.',           "Un technicien certifié SMARTRACK pose un traceur OBD ou câblé discret en moins de 30 minutes — sans interruption d'activité.")],
       ['02', 'bi-cloud-arrow-up', t('Connected to Platform', 'Connecté à la Plateforme'), t('The device registers automatically. You receive your dashboard login credentials within 1 hour.',                         'L\'appareil s\'enregistre automatiquement. Vous recevez vos identifiants de connexion dans l\'heure.')],
       ['03', 'bi-phone-fill',     t('Monitor Anywhere',      'Surveillez Partout'),        t('Log in from any browser or mobile. Alerts land directly in your inbox and on your phone, 24/7.',                          'Connectez-vous depuis n\'importe quel navigateur ou mobile. Les alertes arrivent dans votre boîte mail et sur votre téléphone, 24h/24.')],
     ],
@@ -126,7 +126,7 @@ $serviceDetails = [
     ],
     'benefits' => [
       t('Recover stolen vehicles faster with live tracking during theft events.',  'Récupérez les véhicules volés plus rapidement grâce au suivi en direct lors des incidents.'),
-      t('Deter theft — visible Smartrack branding is a known deterrent.',          'Dissuadez le vol — le logo Smartrack visible est un dissuasif reconnu.'),
+      t('Deter theft — visible SMARTRACK branding is a known deterrent.',          'Dissuadez le vol — le logo SMARTRACK visible est un dissuasif reconnu.'),
       t('Protect drivers with one-touch emergency escalation.',                    'Protégez les conducteurs avec une escalade d\'urgence en un clic.'),
       t('Reduce insurance premiums with certified monitoring evidence.',           'Réduisez les primes d\'assurance avec des preuves de surveillance certifiée.'),
       t('Full chain-of-custody logs for police and legal proceedings.',            'Journaux complets de traçabilité pour la police et les procédures judiciaires.'),
@@ -344,10 +344,10 @@ $serviceDetails = [
 $slug   = $service['slug'] ?? '';
 $detail = $serviceDetails[$slug] ?? null;
 
-$pageTitle = $title . ' — Smartrack Africa';
+$pageTitle = $title . ' — SMARTRACK Africa';
 $metaDescription = trim(preg_replace('/\s+/', ' ', strip_tags($summary ?: $content)))
-                   ?: t('Professional ' . $title . ' services from Smartrack Africa in Cameroon.',
-                        'Services ' . $title . ' professionnels de Smartrack Africa au Cameroun.');
+                   ?: t('Professional ' . $title . ' services from SMARTRACK Africa in Cameroon.',
+                        'Services ' . $title . ' professionnels de SMARTRACK Africa au Cameroun.');
 if (!empty($service['image_path'])) { $ogImage = $service['image_path']; }
 $bodyClass = 'service-details-page';
 

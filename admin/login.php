@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In — Smartrack Admin</title>
+<title>Sign In — SMARTRACK Admin</title>
 <link href="<?php echo escape(site_url('assets/vendor/bootstrap-icons/bootstrap-icons.css')); ?>" rel="stylesheet">
 <style>
 /* ── Reset ───────────────────────────────────────────── */
@@ -550,7 +550,7 @@ body{
       <div class="card-accent"></div>
 
       <div class="card-title">Welcome back</div>
-      <div class="card-sub">Sign in to your Smartrack admin panel</div>
+      <div class="card-sub">Sign in to your SMARTRACK admin panel</div>
 
       <?php if ($error): ?>
         <div class="err">

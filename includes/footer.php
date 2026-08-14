@@ -8,11 +8,11 @@
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="<?php echo escape(site_url('index.php')); ?>" class="logo d-flex align-items-center">
             <img src="<?php echo escape($baseUrl ?? ''); ?>/assets/img/st logo.png" alt="">
-            <span class="sitename">Smar<span class="text-danger">track</span></span>
+            <span class="sitename">SMAR<span class="logo-t-split">T</span><span class="text-danger">RACK</span></span>
           </a>
           <?php $footerLang = function_exists('current_language') ? current_language() : 'en'; ?>
           <div class="footer-contact pt-3">
-            <p>Smartrack Africa</p>
+            <p>SMARTRACK Africa</p>
             <?php
             $footerAddr = !empty($contact['address_' . $footerLang])
                 ? $contact['address_' . $footerLang]
@@ -75,7 +75,7 @@
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span><?php echo t('Copyright','Copyright'); ?></span> <strong class="px-1 sitename">Smartrack Africa</strong> <span><?php echo escape(get_translation('footer_copyright')); ?></span></p>
+      <p>© <span><?php echo t('Copyright','Copyright'); ?></span> <strong class="px-1 sitename">SMARTRACK 2007 Africa</strong> <span><?php echo escape(get_translation('footer_copyright')); ?></span></p>
     </div>
   </footer>
 

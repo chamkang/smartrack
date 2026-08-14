@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $excerptFr = trim($_POST['excerpt_fr']  ?? '');
         $contentEn = trim($_POST['content_en']  ?? '');
         $contentFr = trim($_POST['content_fr']  ?? '');
-        $author    = trim($_POST['author']       ?? 'Smartrack Team');
+        $author    = trim($_POST['author']       ?? 'SMARTRACK Team');
         $category  = trim($_POST['category']     ?? 'General');
         $pubDate   = trim($_POST['published_at'] ?? date('Y-m-d H:i:s'));
         $published = isset($_POST['is_published']) ? 1 : 0;
@@ -87,7 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
                     ')->execute([
                         $titleEn,$titleFr,$slug,$excerptEn,$excerptFr,$contentEn,$contentFr,
-                        $imagePath,'Smartrack Team',$category,$published,$pubDate
+                        $imagePath,'SMARTRACK Team',$category,$published,$pubDate
                     ]);
                 }
                 redirect('blog.php?saved=1');
@@ -222,7 +222,7 @@ include __DIR__ . '/_header.php';
           <div class="form-group">
             <label class="form-label">Author</label>
             <input class="form-control" name="author"
-                   value="<?php echo escape($editing['author'] ?? 'Smartrack Team'); ?>">
+                   value="<?php echo escape($editing['author'] ?? 'SMARTRACK Team'); ?>">
           </div>
         </div>
 

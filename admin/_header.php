@@ -32,7 +32,7 @@ $pageLabel = $breadcrumbs[$currentPage] ?? ($pageTitle ?? 'Admin');
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><?php echo escape($pageTitle ?? 'Admin'); ?> — Smartrack</title>
+  <title><?php echo escape($pageTitle ?? 'Admin'); ?> — SMARTRACK</title>
   <link href="<?php echo escape(site_url('assets/vendor/bootstrap-icons/bootstrap-icons.css')); ?>" rel="stylesheet">
   <link href="<?php echo escape(site_url('assets/vendor/fontawesome-free/css/all.min.css')); ?>" rel="stylesheet">
   <link href="<?php echo escape(site_url('admin/css/admin.css')); ?>" rel="stylesheet">
@@ -47,7 +47,7 @@ $pageLabel = $breadcrumbs[$currentPage] ?? ($pageTitle ?? 'Admin');
   <aside class="sidebar" id="sidebar">
 
     <a href="<?php echo escape(site_url('admin/dashboard.php')); ?>" class="sidebar-logo">
-      <img src="<?php echo escape(site_url('assets/img/st logo.png')); ?>" alt="Smartrack" onerror="this.style.display='none'">
+      <img src="<?php echo escape(site_url('assets/img/st logo.png')); ?>" alt="SMARTRACK" onerror="this.style.display='none'">
       <div class="sidebar-logo-text">SMAR<span>TRACK</span></div>
     </a>
 

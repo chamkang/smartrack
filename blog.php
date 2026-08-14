@@ -1,11 +1,11 @@
 <?php
 require_once __DIR__ . '/includes/functions.php';
 
-$pageTitle = t('Blog — Fleet Management & GPS Insights | Smartrack Africa',
-               'Blog — Gestion de Flotte & Suivi GPS | Smartrack Africa');
+$pageTitle = t('Blog — Fleet Management & GPS Insights | SMARTRACK Africa',
+               'Blog — Gestion de Flotte & Suivi GPS | SMARTRACK Africa');
 $metaDescription = t(
-  'Practical guides on fleet management, GPS tracking, fuel savings and vehicle security for African businesses — from the Smartrack Africa team in Douala.',
-  "Guides pratiques sur la gestion de flotte, le suivi GPS, les économies de carburant et la sécurité des véhicules pour les entreprises africaines — par l'équipe Smartrack Africa à Douala."
+  'Practical guides on fleet management, GPS tracking, fuel savings and vehicle security for African businesses — from the SMARTRACK Africa team in Douala.',
+  "Guides pratiques sur la gestion de flotte, le suivi GPS, les économies de carburant et la sécurité des véhicules pour les entreprises africaines — par l'équipe SMARTRACK Africa à Douala."
 );
 $bodyClass = 'blog-page';
 $lang      = current_language();

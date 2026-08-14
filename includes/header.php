@@ -15,15 +15,15 @@ function nav_is_active(string $page): string {
    Pages may set $metaDescription, $metaKeywords, $ogImage and $noIndex before
    including this file. Sensible bilingual defaults are used otherwise. */
 $seoDesc = $metaDescription ?? t(
-    'Smartrack Africa provides GPS vehicle tracking, fuel monitoring and security solutions for fleets in Cameroon and Central Africa. Real-time tracking, 24/7 local support.',
-    "Smartrack Africa fournit le suivi GPS de véhicules, la surveillance de carburant et des solutions de sécurité pour les flottes au Cameroun et en Afrique centrale. Suivi en temps réel, support local 24h/7j."
+    'SMARTRACK Africa provides GPS vehicle tracking, fuel monitoring and security solutions for fleets in Cameroon and Central Africa. Real-time tracking, 24/7 local support.',
+    "SMARTRACK Africa fournit le suivi GPS de véhicules, la surveillance de carburant et des solutions de sécurité pour les flottes au Cameroun et en Afrique centrale. Suivi en temps réel, support local 24h/7j."
 );
 $seoDesc  = trim(preg_replace('/\s+/', ' ', $seoDesc));
 if (function_exists('mb_strimwidth')) { $seoDesc = mb_strimwidth($seoDesc, 0, 300, '…'); }
 
 $seoKeywords = $metaKeywords ?? t(
-    'GPS tracking Cameroon, fleet management Douala, vehicle tracking Africa, fuel monitoring, geofencing, vehicle security, Smartrack Africa',
-    "suivi GPS Cameroun, gestion de flotte Douala, traçage véhicule Afrique, surveillance carburant, géorepérage, sécurité véhicule, Smartrack Africa"
+    'GPS tracking Cameroon, fleet management Douala, vehicle tracking Africa, fuel monitoring, geofencing, vehicle security, SMARTRACK Africa',
+    "suivi GPS Cameroun, gestion de flotte Douala, traçage véhicule Afrique, surveillance carburant, géorepérage, sécurité véhicule, SMARTRACK Africa"
 );
 
 // Absolute site root (needed for canonical, hreflang, Open Graph)
@@ -47,10 +47,10 @@ $ogImg = isset($ogImage)
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title><?php echo escape($pageTitle ?? 'Smartrack Africa'); ?></title>
+  <title><?php echo escape($pageTitle ?? 'SMARTRACK Africa'); ?></title>
   <meta name="description" content="<?php echo escape($seoDesc); ?>">
   <meta name="keywords" content="<?php echo escape($seoKeywords); ?>">
-  <meta name="author" content="Smartrack Africa">
+  <meta name="author" content="SMARTRACK Africa">
   <meta name="robots" content="<?php echo !empty($noIndex) ? 'noindex,nofollow' : 'index,follow,max-image-preview:large'; ?>">
   <meta name="base-url" content="<?php echo escape($baseUrl); ?>">
   <meta name="theme-color" content="#e60000">
@@ -63,16 +63,16 @@ $ogImg = isset($ogImage)
 
   <!-- Open Graph (Facebook, WhatsApp, LinkedIn) -->
   <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Smartrack Africa">
+  <meta property="og:site_name" content="SMARTRACK Africa">
   <meta property="og:locale" content="<?php echo $language === 'fr' ? 'fr_FR' : 'en_US'; ?>">
-  <meta property="og:title" content="<?php echo escape($pageTitle ?? 'Smartrack Africa'); ?>">
+  <meta property="og:title" content="<?php echo escape($pageTitle ?? 'SMARTRACK Africa'); ?>">
   <meta property="og:description" content="<?php echo escape($seoDesc); ?>">
   <meta property="og:url" content="<?php echo escape($canonical); ?>">
   <meta property="og:image" content="<?php echo escape($ogImg); ?>">
 
   <!-- Twitter/X card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="<?php echo escape($pageTitle ?? 'Smartrack Africa'); ?>">
+  <meta name="twitter:title" content="<?php echo escape($pageTitle ?? 'SMARTRACK Africa'); ?>">
   <meta name="twitter:description" content="<?php echo escape($seoDesc); ?>">
   <meta name="twitter:image" content="<?php echo escape($ogImg); ?>">
 
@@ -83,7 +83,7 @@ $ogImg = isset($ogImage)
   echo json_encode([
       '@context' => 'https://schema.org',
       '@type'    => 'LocalBusiness',
-      'name'     => 'Smartrack Africa',
+      'name'     => 'SMARTRACK Africa',
       'description' => $seoDesc,
       'url'      => $siteRoot . '/',
       'logo'     => $siteRoot . '/assets/img/st logo.png',
